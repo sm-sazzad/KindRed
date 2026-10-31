@@ -1,7 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { connection } from "next/server";
-import { FaArrowRight, FaCalendarDays, FaLocationDot, FaUsers } from "react-icons/fa6";
+import {
+  FaArrowRight,
+  FaCalendarDays,
+  FaLocationDot,
+  FaUsers,
+} from "react-icons/fa6";
 
 export interface Event {
   _id: string;
@@ -45,16 +50,6 @@ function formatDate(value: string) {
   }).format(date);
 }
 
-function getInitials(title: string) {
-  return title
-    .split(/\s+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-}
-
 function EventArtwork({
   event,
   index,
@@ -89,7 +84,7 @@ function EventArtwork({
           className="absolute inset-0 flex items-center justify-center"
         >
           <span className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-xl font-bold text-white/85 backdrop-blur-sm">
-            {getInitials(event.title)}
+            {event.title}
           </span>
         </div>
       )}
@@ -98,7 +93,13 @@ function EventArtwork({
   );
 }
 
-function EventMeta({ event, prominent = false }: { event: Event; prominent?: boolean }) {
+function EventMeta({
+  event,
+  prominent = false,
+}: {
+  event: Event;
+  prominent?: boolean;
+}) {
   const location = [event.location, event.city].filter(Boolean).join(", ");
   const date = formatDate(event.eventDate);
 
@@ -110,10 +111,15 @@ function EventMeta({ event, prominent = false }: { event: Event; prominent?: boo
     >
       <span className="inline-flex items-center gap-1.5">
         <FaLocationDot aria-hidden="true" className="shrink-0 text-[#d9e9c5]" />
-        <span className="line-clamp-1">{location || "Location to be announced"}</span>
+        <span className="line-clamp-1">
+          {location || "Location to be announced"}
+        </span>
       </span>
       <span className="inline-flex items-center gap-1.5">
-        <FaCalendarDays aria-hidden="true" className="shrink-0 text-[#d9e9c5]" />
+        <FaCalendarDays
+          aria-hidden="true"
+          className="shrink-0 text-[#d9e9c5]"
+        />
         {date}
       </span>
       <span className="inline-flex items-center gap-1.5">
@@ -185,7 +191,11 @@ function SideEventCard({ event, index }: { event: Event; index: number }) {
           {event.title}
         </h3>
         <p className="mt-1 line-clamp-1 text-[10px] text-white/50">
-          {[event.city, Number(event.joinedVolunteers || 0).toLocaleString("en-BD") + " volunteers"]
+          {[
+            event.city,
+            Number(event.joinedVolunteers || 0).toLocaleString("en-BD") +
+              " volunteers",
+          ]
             .filter(Boolean)
             .join(" · ")}
         </p>
@@ -193,7 +203,8 @@ function SideEventCard({ event, index }: { event: Event; index: number }) {
           href={`/upcomming-events/${event._id}`}
           className="mt-auto inline-flex items-center gap-1 pt-2 text-[11px] font-bold text-[#d9e9c5] underline decoration-white/30 underline-offset-4 transition-colors hover:text-white"
         >
-          View details <FaArrowRight aria-hidden="true" className="text-[9px]" />
+          View details{" "}
+          <FaArrowRight aria-hidden="true" className="text-[9px]" />
         </Link>
       </div>
     </article>
@@ -283,8 +294,8 @@ const FeaturedPosts = async () => {
             role="status"
             className="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-sm text-white/65"
           >
-            We couldn&apos;t load events right now. Please try again in a
-            little while.
+            We couldn&apos;t load events right now. Please try again in a little
+            while.
           </p>
         </div>
       </section>
@@ -314,7 +325,8 @@ const FeaturedPosts = async () => {
             href="/upcomming-events"
             className="mb-1 inline-flex shrink-0 items-center gap-2 border-b border-white/40 pb-1 text-xs font-semibold text-white/75 transition-colors hover:border-[#d9e9c5] hover:text-[#d9e9c5]"
           >
-            View all events <FaArrowRight aria-hidden="true" className="text-[10px]" />
+            View all events{" "}
+            <FaArrowRight aria-hidden="true" className="text-[10px]" />
           </Link>
         </div>
 

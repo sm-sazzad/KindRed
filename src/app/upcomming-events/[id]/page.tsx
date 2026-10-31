@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { FaBookmark, FaSave } from "react-icons/fa";
 import {
   FaArrowLeft,
   FaArrowRight,
@@ -11,6 +12,7 @@ import {
   FaUser,
   FaUsers,
 } from "react-icons/fa6";
+import JoinedBtn from "./JoinedBtn";
 
 interface Event {
   _id: string;
@@ -37,6 +39,15 @@ const statusStyles = {
 };
 
 const formatDate = (value: string) => {
+  if (!value || value === "Date to be announced") {
+    return "Date to be announced";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Date to be announced";
+  }
   return new Intl.DateTimeFormat("en-BD", {
     day: "numeric",
     month: "long",
@@ -183,23 +194,7 @@ const EventDetailsPage = async ({
             )}
 
             {/* Join Button */}
-            <div className="mt-auto pt-8">
-              {event.status === "upcoming" ? (
-                <Link
-                  href="/login"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#d9e9c5] px-5 py-3.5 text-sm font-bold text-[#203228] transition-colors hover:bg-white"
-                >
-                  Join this event
-                  <FaArrowRight className="text-xs" />
-                </Link>
-              ) : (
-                <p className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-center text-xs text-white/60">
-                  {event.status === "completed"
-                    ? "This event has already taken place. Thank you to everyone who participated."
-                    : "This event is happening now. Thank you to everyone taking part."}
-                </p>
-              )}
-            </div>
+            <JoinedBtn event={event} />
           </div>
         </article>
       </div>

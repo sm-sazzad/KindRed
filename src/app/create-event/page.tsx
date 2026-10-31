@@ -46,6 +46,7 @@ export default function CreateEventPage() {
       organizerEmail: formData.get("organizerEmail"),
       imageUrl: formData.get("imageUrl"),
       createdAt: new Date(),
+      status: "upcoming",
     };
 
     try {
