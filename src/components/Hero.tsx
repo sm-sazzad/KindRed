@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FaArrowRight, FaLocationDot } from "react-icons/fa6";
 import FeaturedPosts from "./FeaturedPosts";
 import Category from "./Category";
+import Subscribe from "./Subscribe";
 
 const Hero = () => {
   return (
@@ -133,6 +134,7 @@ const Hero = () => {
       </section>
       <FeaturedPosts />
       <Category />
+      <Subscribe />
     </>
   );
 };
