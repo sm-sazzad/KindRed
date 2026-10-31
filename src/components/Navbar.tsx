@@ -8,9 +8,10 @@ import { useState } from "react";
 import { FaHandHoldingHeart } from "react-icons/fa";
 import {
   FaArrowRightFromBracket,
+  FaCircleCheck,
+  FaCirclePlus,
   FaChevronDown,
-  FaCalendarDays,
-  FaHouse,
+  FaGear,
 } from "react-icons/fa6";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
@@ -111,22 +112,31 @@ const Navbar = () => {
 
                     <div className="space-y-1 p-2">
                       <Link
-                        href="/upcomming-events"
+                        href="/create-event"
                         role="menuitem"
                         onClick={() => setIsProfileOpen(false)}
                         className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.07] hover:text-[#D9E9C5]"
                       >
-                        <FaCalendarDays className="text-[#42d4bd]" />
-                        Upcoming Events
+                        <FaCirclePlus className="text-[#42d4bd]" />
+                        Create Event
                       </Link>
                       <Link
-                        href="/"
+                        href="/manage-events"
                         role="menuitem"
                         onClick={() => setIsProfileOpen(false)}
                         className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.07] hover:text-[#D9E9C5]"
                       >
-                        <FaHouse className="text-[#8b83ff]" />
-                        Home
+                        <FaGear className="text-[#8b83ff]" />
+                        Manage Events
+                      </Link>
+                      <Link
+                        href="/joined-events"
+                        role="menuitem"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.07] hover:text-[#D9E9C5]"
+                      >
+                        <FaCircleCheck className="text-[#00c99a]" />
+                        Joined Events
                       </Link>
                     </div>
 

@@ -14,6 +14,7 @@ export interface Event {
   joinedVolunteers: number;
   imageUrl: string;
   status: "upcoming" | "ongoing" | "completed";
+  createdAt?: string;
 }
 
 export function isEvent(value: unknown): value is Event {
