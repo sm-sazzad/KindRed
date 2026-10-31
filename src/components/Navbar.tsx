@@ -1,16 +1,25 @@
 "use client";
 
+import { authClient, useSession } from "@/lib/auth-client";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { FaHandHoldingHeart } from "react-icons/fa";
+import {
+  FaArrowRightFromBracket,
+  FaChevronDown,
+  FaCalendarDays,
+  FaHouse,
+} from "react-icons/fa6";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { HiOutlineArrowTurnUpRight } from "react-icons/hi2";
 import { RxCross2 } from "react-icons/rx";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const pathname = usePathname();
+  const session = useSession();
 
   const handleToggleMenu = () => {
     setIsOpen(true);
@@ -55,19 +64,106 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-4">
-            <Link
-              href="/login"
-              className=" text-sm font-semibold text-white transition-colors hover:text-[#D9E9C5] "
-            >
-              Login
-            </Link>
+            {session.data?.user ? (
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsProfileOpen(!isProfileOpen)}
+                  aria-label="Toggle profile menu"
+                  aria-expanded={isProfileOpen}
+                  aria-haspopup="menu"
+                  className="flex cursor-pointer items-center gap-2 rounded-full p-1.5 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9E9C5]"
+                >
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-[#D9E9C5] bg-[#D9E9C5] text-sm font-bold text-[#142C45]">
+                    {session.data.user.image ? (
+                      <Image
+                        src={session.data.user.image}
+                        alt=""
+                        width={40}
+                        height={40}
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      session.data.user.name?.charAt(0).toUpperCase() || "U"
+                    )}
+                  </span>
+                  <FaChevronDown
+                    aria-hidden="true"
+                    className={`text-xs text-[#D9E9C5] transition-transform duration-200 ${
+                      isProfileOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
 
-            <Link
-              href="/login"
-              className="hidden group sm:flex items-center gap-2 rounded-full bg-[#D9E9C5] px-5 py-2.5 text-sm font-bold text-[#142C45] transition-all duration-300 hover:bg-white"
-            >
-              Login
-            </Link>
+                {isProfileOpen && (
+                  <div
+                    role="menu"
+                    className="absolute right-0 top-full z-[70] mt-3 w-72 overflow-hidden rounded-2xl border border-white/10 bg-[#101b2c] text-white shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
+                  >
+                    <div className="border-b border-white/10 px-5 py-4">
+                      <p className="truncate font-bold">
+                        {session.data.user.name || "Kindred member"}
+                      </p>
+                      <p className="mt-1 truncate text-sm text-slate-400">
+                        {session.data.user.email}
+                      </p>
+                    </div>
+
+                    <div className="space-y-1 p-2">
+                      <Link
+                        href="/upcomming-events"
+                        role="menuitem"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.07] hover:text-[#D9E9C5]"
+                      >
+                        <FaCalendarDays className="text-[#42d4bd]" />
+                        Upcoming Events
+                      </Link>
+                      <Link
+                        href="/"
+                        role="menuitem"
+                        onClick={() => setIsProfileOpen(false)}
+                        className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.07] hover:text-[#D9E9C5]"
+                      >
+                        <FaHouse className="text-[#8b83ff]" />
+                        Home
+                      </Link>
+                    </div>
+
+                    <div className="border-t border-white/10 p-2">
+                      <button
+                        type="button"
+                        role="menuitem"
+                        onClick={async () => {
+                          await authClient.signOut();
+                          setIsProfileOpen(false);
+                        }}
+                        className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-[#ff7777] transition hover:bg-red-400/10"
+                      >
+                        <FaArrowRightFromBracket />
+                        Sign out
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="text-sm font-semibold text-white transition-colors hover:text-[#D9E9C5]"
+                >
+                  Login
+                </Link>
+
+                <Link
+                  href="/sign-up"
+                  className="hidden items-center gap-2 rounded-full bg-[#D9E9C5] px-5 py-2.5 text-sm font-bold text-[#142C45] transition-all duration-300 hover:bg-white sm:flex"
+                >
+                  Join Us
+                </Link>
+              </>
+            )}
 
             {/* Mobile Menu Icon */}
             <button

@@ -92,7 +92,7 @@ const Footer = () => {
             <ul className="mt-4 space-y-3">
               <li>
                 <Link
-                  href="/login"
+                  href="/sign-up"
                   className="text-sm text-white/50 transition-colors hover:text-[#d9e9c5]"
                 >
                   Join the community
