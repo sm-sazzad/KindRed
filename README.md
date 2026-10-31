@@ -20,6 +20,12 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## API configuration
+
+The featured events section loads data from the backend `GET /api/featured`
+endpoint. It uses `http://localhost:5000` by default; set `NEXT_PUBLIC_API_URL`
+to the backend origin when using a different local or deployed API.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
