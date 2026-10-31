@@ -6,28 +6,81 @@ import { FaArrowRight, FaTrash, FaXmark } from "react-icons/fa6";
 import { FaPenToSquare } from "react-icons/fa6";
 import { categories } from "@/components/Category";
 import type { Event } from "@/components/events/types";
+import { useRouter } from "next/navigation";
 
 const Btn = ({ event }: { event: Event }) => {
   const [dialog, setDialog] = useState<"edit" | "delete" | null>(null);
+  const [isPending, setIsPending] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const router = useRouter();
 
   const handleEdit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const updatedData = Object.fromEntries(formData.entries());
-    console.log(updatedData);
 
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/events/${event._id}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedData),
-      },
-    );
+    setIsPending(true);
+    setErrorMessage("");
 
-    const resData = await res.json();
-    if (resData.modifiedCount > 0) {
-      console.log("Changed");
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/events/${event._id}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedData),
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("Could not update the event. Please try again.");
+      }
+
+      const resData = await res.json();
+      if (resData.modifiedCount > 0) {
+        router.refresh();
+        setDialog(null);
+      } else {
+        setErrorMessage("No changes were saved. Please try again.");
+      }
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : "Could not update the event.",
+      );
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    setIsPending(true);
+    setErrorMessage("");
+
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/events/${event._id}`,
+        {
+          method: "DELETE",
+        },
+      );
+
+      if (!res.ok) {
+        throw new Error("Could not delete the event. Please try again.");
+      }
+
+      const resData = await res.json();
+      if (resData.deletedCount > 0) {
+        router.refresh();
+        setDialog(null);
+      } else {
+        setErrorMessage("The event was not deleted. Please try again.");
+      }
+    } catch (error) {
+      setErrorMessage(
+        error instanceof Error ? error.message : "Could not delete the event.",
+      );
+    } finally {
+      setIsPending(false);
     }
   };
 
@@ -42,7 +95,10 @@ const Btn = ({ event }: { event: Event }) => {
         </Link>
         <button
           type="button"
-          onClick={() => setDialog("edit")}
+          onClick={() => {
+            setErrorMessage("");
+            setDialog("edit");
+          }}
           className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-white/10"
         >
           <FaPenToSquare />
@@ -51,7 +107,10 @@ const Btn = ({ event }: { event: Event }) => {
 
         <button
           type="button"
-          onClick={() => setDialog("delete")}
+          onClick={() => {
+            setErrorMessage("");
+            setDialog("delete");
+          }}
           className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-red-300/15 bg-red-400/[0.08] px-3 py-2.5 text-xs font-semibold text-red-200 transition hover:bg-red-400/15"
         >
           <FaTrash />
@@ -84,8 +143,9 @@ const Btn = ({ event }: { event: Event }) => {
               <button
                 type="button"
                 onClick={() => setDialog(null)}
+                disabled={isPending}
                 aria-label="Close dialog"
-                className="rounded-lg p-2 text-white/60 transition hover:bg-white/10 hover:text-white"
+                className="rounded-lg p-2 cursor-pointer text-white/60 transition hover:bg-white/10 hover:text-white"
               >
                 <FaXmark />
               </button>
@@ -96,9 +156,14 @@ const Btn = ({ event }: { event: Event }) => {
                 onSubmit={handleEdit}
                 className="max-h-[70vh] overflow-y-auto p-5 sm:p-7"
               >
-                <p className="mb-5 text-sm text-white/55">
-                  You can edit these details here. Saving is not connected yet.
-                </p>
+                {errorMessage && (
+                  <p
+                    role="alert"
+                    className="mb-5 rounded-xl border border-red-300/15 bg-red-300/[0.06] px-4 py-3 text-sm text-red-200"
+                  >
+                    {errorMessage}
+                  </p>
+                )}
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="text-sm font-medium text-white/75">
                     Title
@@ -220,15 +285,23 @@ const Btn = ({ event }: { event: Event }) => {
                 <div className="mt-6 flex justify-end">
                   <button
                     type="submit"
-                    // onClick={() => setDialog(null)}
-                    className="rounded-xl bg-[#d9e9c5] px-5 py-3 text-sm font-bold text-[#203242] transition hover:bg-white"
+                    disabled={isPending}
+                    className="rounded-xl cursor-pointer bg-[#d9e9c5] px-5 py-3 text-sm font-bold text-[#203242] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    Done
+                    {isPending ? "Saving..." : "Save changes"}
                   </button>
                 </div>
               </form>
             ) : (
               <div className="p-5 sm:p-7">
+                {errorMessage && (
+                  <p
+                    role="alert"
+                    className="mb-5 rounded-xl border border-red-300/15 bg-red-300/[0.06] px-4 py-3 text-sm text-red-200"
+                  >
+                    {errorMessage}
+                  </p>
+                )}
                 <p className="text-sm leading-6 text-white/65">
                   Are you sure you want to delete{" "}
                   <span className="font-semibold text-white">
@@ -240,16 +313,18 @@ const Btn = ({ event }: { event: Event }) => {
                   <button
                     type="button"
                     onClick={() => setDialog(null)}
-                    className="rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold text-white/80 transition hover:bg-white/[0.06]"
+                    disabled={isPending}
+                    className="rounded-xl cursor-pointer border border-white/10 px-5 py-3 text-sm font-semibold text-white/80 transition hover:bg-white/[0.06]"
                   >
                     Close
                   </button>
                   <button
                     type="button"
-                    onClick={() => setDialog(null)}
-                    className="rounded-xl border border-white/10 px-5 py-3 text-sm font-semibold text-red-600 font-bold transition hover:bg-white/[0.06]"
+                    onClick={handleDelete}
+                    disabled={isPending}
+                    className="rounded-xl cursor-pointer border border-white/10 px-5 py-3 text-sm font-bold text-red-300 transition hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-60"
                   >
-                    Delete
+                    {isPending ? "Deleting..." : "Delete event"}
                   </button>
                 </div>
               </div>
