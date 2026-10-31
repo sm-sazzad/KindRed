@@ -79,7 +79,10 @@ export const categories = [
 
 const Category = () => {
   return (
-    <section className="relative overflow-hidden bg-[#111b27] px-[5%] py-16 text-[#f6f7f2] sm:py-20 lg:py-24">
+    <section
+      id="causes"
+      className="relative overflow-hidden bg-[#111b27] px-[5%] py-16 text-[#f6f7f2] sm:py-20 lg:py-24"
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-32 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-[#d9e9c5]/[0.04] blur-3xl"

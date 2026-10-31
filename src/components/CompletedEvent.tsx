@@ -120,11 +120,6 @@ const completed = [
 ];
 
 const CompletedEvent = () => {
-  const totalVolunteerParticipations = completed.reduce(
-    (total, event) => total + event.joinedVolunteers,
-    0,
-  );
-
   return (
     <section
       aria-labelledby="completed-events-heading"
