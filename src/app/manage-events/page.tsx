@@ -3,7 +3,8 @@ import type { Event } from "@/components/events/types";
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import { FaArrowRight, FaCalendarDays, FaLocationDot } from "react-icons/fa6";
+import { FaCalendarDays, FaLocationDot } from "react-icons/fa6";
+import Btn from "./Btn";
 
 function formatDate(value: string) {
   const date = new Date(value);
@@ -164,30 +165,7 @@ export default async function ManageEventsPage() {
                     </p>
                   </div>
 
-                  <div className="mt-5 grid grid-cols-3 gap-2 border-t border-white/10 pt-4">
-                    <Link
-                      href={`/upcomming-events/${event._id}`}
-                      className="inline-flex items-center justify-center gap-1 rounded-lg bg-[#d9e9c5] px-2 py-2.5 text-xs font-bold text-[#203242] transition hover:bg-white"
-                    >
-                      View <FaArrowRight aria-hidden="true" />
-                    </Link>
-                    <button
-                      type="button"
-                      disabled
-                      title="Editing is not available yet"
-                      className="cursor-not-allowed rounded-lg border border-white/10 bg-white/[0.04] px-2 py-2.5 text-xs font-semibold text-white/40"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      disabled
-                      title="Deleting is not available yet"
-                      className="cursor-not-allowed rounded-lg border border-red-300/10 bg-red-300/[0.04] px-2 py-2.5 text-xs font-semibold text-red-200/50"
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  <Btn event={event} />
                 </div>
               </article>
             ))}

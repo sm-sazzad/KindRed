@@ -10,6 +10,7 @@ export interface Event {
   location: string;
   city: string;
   organizer: string;
+  organizerEmail?: string;
   volunteerCapacity?: number;
   joinedVolunteers: number;
   imageUrl: string;

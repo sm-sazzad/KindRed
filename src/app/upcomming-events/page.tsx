@@ -204,11 +204,17 @@ const Page = async () => {
     throw new Error("Failed to fetch events");
   }
 
-  const events: Event[] = await res.json();
+  const allEvents: Event[] = await res.json();
 
-  const upcomingCount = events.filter(
-    (event) => event.status === "upcoming",
-  ).length;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const events = allEvents.filter((event) => {
+    const eventDate = new Date(`${event.eventDate}T00:00:00`);
+    return eventDate >= today;
+  });
+
+  const upcomingCount = events.length;
 
   return (
     <section className="min-h-[65vh] bg-[#111b27] px-[5%] py-14 text-[#f6f7f2] sm:py-20 lg:py-24">
