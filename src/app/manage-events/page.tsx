@@ -156,7 +156,12 @@ export default async function ManageEventsPage() {
                       />
                       {[event.location, event.city].filter(Boolean).join(", ")}
                     </p>
-                    <p>Created At {event.createdAt}</p>
+                    <p>
+                      Created At:{" "}
+                      {event.createdAt
+                        ? new Date(event.createdAt).toLocaleString()
+                        : "N/A"}
+                    </p>
                   </div>
 
                   <div className="mt-5 grid grid-cols-3 gap-2 border-t border-white/10 pt-4">
