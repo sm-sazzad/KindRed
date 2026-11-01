@@ -27,15 +27,15 @@ export default async function ManageEventsPage() {
 
   if (!session?.user.email) {
     return (
-      <main className="min-h-[65vh] bg-[#111b27] px-[5%] py-16 text-[#f6f7f2]">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-[#192736] p-8 text-center">
-          <h1 className="text-3xl font-extrabold">Your events</h1>
-          <p className="mt-3 text-sm text-white/55">
+      <main className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-16 text-[#142C45] transition-colors duration-300 dark:bg-[#111b27] dark:text-[#f6f7f2]">
+        <div className="mx-auto max-w-3xl rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-xl dark:border-white/10 dark:bg-[#192736]">
+          <h1 className="text-3xl font-extrabold text-[#142C45] dark:text-white">Your events</h1>
+          <p className="mt-3 text-sm text-[#142C45]/60 dark:text-white/55">
             Sign in to see the events you created.
           </p>
           <Link
             href="/login"
-            className="mt-6 inline-flex rounded-xl bg-[#d9e9c5] px-5 py-3 text-sm font-bold text-[#203242] transition hover:bg-white"
+            className="mt-6 inline-flex rounded-xl bg-[#142C45] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1e3d5f] dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white"
           >
             Sign in
           </Link>
@@ -74,16 +74,16 @@ export default async function ManageEventsPage() {
   }
 
   return (
-    <main className="min-h-[65vh] bg-[#111b27] px-[5%] py-12 text-[#f6f7f2] sm:py-16">
+    <main className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-12 text-[#142C45] transition-colors duration-300 sm:py-16 dark:bg-[#111b27] dark:text-[#f6f7f2]">
       <div className="mx-auto max-w-7xl">
         <div className="mb-9">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#d9e9c5]">
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#5d8338] dark:text-[#d9e9c5]">
             Your community
           </p>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[#142C45] sm:text-4xl dark:text-white">
             Your events
           </h1>
-          <p className="mt-2 text-sm text-white/55">
+          <p className="mt-2 text-sm text-[#142C45]/60 dark:text-white/55">
             Events created by {session.user.name || session.user.email}.
           </p>
         </div>
@@ -91,21 +91,21 @@ export default async function ManageEventsPage() {
         {errorMessage ? (
           <p
             role="alert"
-            className="rounded-2xl border border-red-300/15 bg-red-300/[0.06] px-5 py-4 text-sm text-red-200"
+            className="rounded-2xl border border-red-300/15 bg-red-300/[0.06] px-5 py-4 text-sm text-red-500 dark:text-red-200"
           >
             {errorMessage}
           </p>
         ) : events.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-white/15 bg-white/[0.025] px-6 py-16 text-center">
-            <h2 className="text-xl font-bold text-white">
+          <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-100 px-6 py-16 text-center dark:border-white/15 dark:bg-white/[0.025]">
+            <h2 className="text-xl font-bold text-[#142C45] dark:text-white">
               You haven&apos;t created any events yet.
             </h2>
-            <p className="mt-2 text-sm text-white/50">
+            <p className="mt-2 text-sm text-[#142C45]/60 dark:text-white/50">
               Your events will show up here once they are available.
             </p>
             <Link
               href="/create-event"
-              className="mt-6 inline-flex rounded-xl bg-[#d9e9c5] px-5 py-3 text-sm font-bold text-[#203242] transition hover:bg-white"
+              className="mt-6 inline-flex rounded-xl bg-[#142C45] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1e3d5f] dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white"
             >
               Create an event
             </Link>
@@ -115,7 +115,7 @@ export default async function ManageEventsPage() {
             {events.map((event) => (
               <article
                 key={event._id}
-                className="overflow-hidden rounded-3xl border border-white/10 bg-[#192736] shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)]"
+                className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:border-white/10 dark:bg-[#192736] dark:shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)]"
               >
                 <div className="relative h-48 bg-gradient-to-br from-[#d9e9c5]/30 via-[#1a344b] to-[#111b27]">
                   {event.imageUrl && (
@@ -134,18 +134,18 @@ export default async function ManageEventsPage() {
                 </div>
 
                 <div className="p-5">
-                  <h2 className="truncate text-lg font-bold text-white">
+                  <h2 className="truncate text-lg font-bold text-[#142C45] dark:text-white">
                     {event.title}
                   </h2>
-                  <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 text-white/50">
+                  <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 text-[#142C45]/70 dark:text-white/50">
                     {event.description}
                   </p>
 
-                  <div className="mt-4 space-y-2 text-xs text-white/60">
+                  <div className="mt-4 space-y-2 text-xs text-[#142C45]/70 dark:text-white/60">
                     <p className="flex items-center gap-2">
                       <FaCalendarDays
                         aria-hidden="true"
-                        className="text-[#d9e9c5]"
+                        className="text-[#5d8338] dark:text-[#d9e9c5]"
                       />
                       {formatDate(event.eventDate)}
                       {event.startTime && ` · ${event.startTime}`}
@@ -153,7 +153,7 @@ export default async function ManageEventsPage() {
                     <p className="flex items-center gap-2">
                       <FaLocationDot
                         aria-hidden="true"
-                        className="text-[#d9e9c5]"
+                        className="text-[#5d8338] dark:text-[#d9e9c5]"
                       />
                       {[event.location, event.city].filter(Boolean).join(", ")}
                     </p>

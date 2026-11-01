@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import { FormEvent, useState } from "react";
 import {
   FaArrowRight,
   FaEnvelope,
@@ -20,18 +19,12 @@ type AuthFormProps = {
   mode: "login" | "sign-up";
 };
 
+const inputClassName =
+  "w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-[#142C45] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)] outline-none transition placeholder:text-gray-400 focus:border-[#142C45]/60 focus:ring-2 focus:ring-[#142C45]/10 dark:border-white/10 dark:bg-[#111b27] dark:text-white dark:placeholder:text-white/35 dark:shadow-[inset_3px_3px_8px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_rgba(255,255,255,0.03)] dark:focus:border-[#d9e9c5]/60 dark:focus:ring-[#d9e9c5]/20";
+
 export default function AuthForm({ mode }: AuthFormProps) {
   const isSignUp = mode === "sign-up";
   const router = useRouter();
-
-  const [mounted, setMounted] = useState(false);
-  const { theme, resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark = !mounted || (resolvedTheme || theme) === "dark";
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -40,10 +33,6 @@ export default function AuthForm({ mode }: AuthFormProps) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
-  const inputClassName = isDark
-    ? "w-full rounded-2xl border border-white/10 bg-[#111b27] px-4 py-3.5 text-sm text-white shadow-[inset_3px_3px_8px_rgba(0,0,0,0.5),inset_-2px_-2px_6px_rgba(255,255,255,0.03)] outline-none transition placeholder:text-white/35 focus:border-[#d9e9c5]/60 focus:ring-2 focus:ring-[#d9e9c5]/20"
-    : "w-full rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3.5 text-sm text-[#142C45] shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05)] outline-none transition placeholder:text-gray-400 focus:border-[#142C45]/60 focus:ring-2 focus:ring-[#142C45]/10";
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -119,80 +108,41 @@ export default function AuthForm({ mode }: AuthFormProps) {
   }
 
   return (
-    <section
-      className={`relative isolate min-h-[85vh] flex items-center justify-center overflow-hidden px-5 py-12 transition-colors duration-300 sm:px-8 lg:py-16 ${
-        isDark ? "bg-[#111b27]" : "bg-[#F7F6F0]"
-      }`}
-    >
+    <section className="relative isolate min-h-[85vh] flex items-center justify-center overflow-hidden bg-[#F7F6F0] px-5 py-12 transition-colors duration-300 dark:bg-[#111b27] sm:px-8 lg:py-16">
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute -left-28 top-8 h-72 w-72 rounded-full blur-3xl ${
-          isDark ? "bg-[#1a344b]/60" : "bg-white/80"
-        }`}
+        className="pointer-events-none absolute -left-28 top-8 h-72 w-72 rounded-full bg-white/80 blur-3xl dark:bg-[#1a344b]/60"
       />
 
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute -bottom-36 right-0 h-96 w-96 rounded-full blur-3xl ${
-          isDark ? "bg-[#d9e9c5]/10" : "bg-[#d9e9c5]/40"
-        }`}
+        className="pointer-events-none absolute -bottom-36 right-0 h-96 w-96 rounded-full bg-[#d9e9c5]/40 blur-3xl dark:bg-[#d9e9c5]/10"
       />
 
-      <div
-        className={`relative mx-auto grid max-w-6xl w-full overflow-hidden rounded-[2rem] transition-colors duration-300 ${
-          isDark
-            ? "border border-white/10 bg-[#192736] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)]"
-            : "border border-gray-200 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
-        } lg:grid-cols-[1.05fr_0.95fr]`}
-      >
+      <div className="relative mx-auto grid max-w-6xl w-full overflow-hidden rounded-[2rem] border border-gray-200 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-colors duration-300 dark:border-white/10 dark:bg-[#192736] dark:shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] lg:grid-cols-[1.05fr_0.95fr]">
         <div className="p-7 sm:p-10 lg:p-14">
           <Link
             href="/"
             className="group mb-10 inline-flex items-center gap-3 transition-colors sm:mb-12"
           >
-            <span
-              className={`flex h-11 w-11 items-center justify-center rounded-2xl text-xl transition-transform duration-300 group-hover:rotate-[-8deg] ${
-                isDark
-                  ? "border border-white/10 bg-[#111b27] text-[#d9e9c5] shadow-[4px_4px_10px_rgba(0,0,0,0.4)]"
-                  : "border border-gray-200 bg-gray-100 text-[#142C45] shadow-sm"
-              }`}
-            >
+            <span className="flex h-11 w-11 items-center justify-center rounded-2xl border border-gray-200 bg-gray-100 text-xl text-[#142C45] shadow-sm transition-transform duration-300 group-hover:rotate-[-8deg] dark:border-white/10 dark:bg-[#111b27] dark:text-[#d9e9c5] dark:shadow-[4px_4px_10px_rgba(0,0,0,0.4)]">
               <FaHandHoldingHeart aria-hidden="true" />
             </span>
 
-            <span
-              className={`text-xl font-extrabold tracking-tight transition-colors ${
-                isDark ? "text-white" : "text-[#142C45]"
-              }`}
-            >
-              Kindred
-              <span className={isDark ? "text-[#d9e9c5]" : "text-[#8CA875]"}>
-                .
-              </span>
+            <span className="text-xl font-extrabold tracking-tight text-[#142C45] transition-colors dark:text-white">
+              Kindred<span className="text-[#8CA875] dark:text-[#d9e9c5]">.</span>
             </span>
           </Link>
 
-          <p
-            className={`text-xs font-bold uppercase tracking-[0.2em] transition-colors ${
-              isDark ? "text-[#d9e9c5]" : "text-[#526d4e]"
-            }`}
-          >
+          <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#526d4e] transition-colors dark:text-[#d9e9c5]">
             {isSignUp ? "A little good starts here" : "Welcome back"}
           </p>
 
-          <h1
-            className={`mt-3 text-3xl font-extrabold tracking-tight transition-colors sm:text-4xl ${
-              isDark ? "text-white" : "text-[#142C45]"
-            }`}
-          >
+          <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-[#142C45] transition-colors dark:text-white sm:text-4xl">
             {isSignUp ? "Join your community." : "Good to see you again."}
           </h1>
 
-          <p
-            className={`mt-3 max-w-md text-sm leading-6 transition-colors ${
-              isDark ? "text-white/60" : "text-gray-600"
-            }`}
-          >
+          <p className="mt-3 max-w-md text-sm leading-6 text-gray-600 transition-colors dark:text-white/60">
             {isSignUp
               ? "Create an account to find your people and make a difference together."
               : "Sign in to pick up where you left off and keep making a difference."}
@@ -212,11 +162,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
                   toast.error("Failed to connect with Google.");
                 }
               }}
-              className={`flex w-full cursor-pointer items-center justify-center gap-3 rounded-2xl border px-5 py-4 text-sm font-bold transition ${
-                isDark
-                  ? "border-white/10 bg-[#111b27] text-white shadow-[4px_4px_10px_rgba(0,0,0,0.3)] hover:bg-white/10 hover:border-white/20"
-                  : "border-gray-200 bg-gray-50 text-[#142C45] shadow-sm hover:bg-gray-100"
-              }`}
+              className="flex w-full cursor-pointer items-center justify-center gap-3 rounded-2xl border border-gray-200 bg-gray-50 px-5 py-4 text-sm font-bold text-[#142C45] shadow-sm transition hover:bg-gray-100 dark:border-white/10 dark:bg-[#111b27] dark:text-white dark:shadow-[4px_4px_10px_rgba(0,0,0,0.3)] dark:hover:border-white/20 dark:hover:bg-white/10"
             >
               <FaGoogle />
               {isSignUp ? "Sign up with Google" : "Sign in with Google"}
@@ -224,32 +170,16 @@ export default function AuthForm({ mode }: AuthFormProps) {
 
             {/* Divider */}
             <div className="flex items-center gap-4">
-              <div
-                className={`h-px flex-1 ${
-                  isDark ? "bg-white/10" : "bg-gray-200"
-                }`}
-              />
-              <span
-                className={`text-xs ${
-                  isDark ? "text-white/40" : "text-gray-400"
-                }`}
-              >
-                OR
-              </span>
-              <div
-                className={`h-px flex-1 ${
-                  isDark ? "bg-white/10" : "bg-gray-200"
-                }`}
-              />
+              <div className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
+              <span className="text-xs text-gray-400 dark:text-white/40">OR</span>
+              <div className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
             </div>
 
             {isSignUp && (
               <div>
                 <label
                   htmlFor="name"
-                  className={`mb-2 block text-sm font-semibold transition-colors ${
-                    isDark ? "text-white/80" : "text-gray-700"
-                  }`}
+                  className="mb-2 block text-sm font-semibold text-gray-700 transition-colors dark:text-white/80"
                 >
                   Your name
                 </label>
@@ -257,9 +187,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
                 <div className="relative">
                   <FaUser
                     aria-hidden="true"
-                    className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm ${
-                      isDark ? "text-white/40" : "text-gray-400"
-                    }`}
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 dark:text-white/40"
                   />
 
                   <input
@@ -280,9 +208,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
             <div>
               <label
                 htmlFor="email"
-                className={`mb-2 block text-sm font-semibold transition-colors ${
-                  isDark ? "text-white/80" : "text-gray-700"
-                }`}
+                className="mb-2 block text-sm font-semibold text-gray-700 transition-colors dark:text-white/80"
               >
                 Email address
               </label>
@@ -290,9 +216,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               <div className="relative">
                 <FaEnvelope
                   aria-hidden="true"
-                  className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm ${
-                    isDark ? "text-white/40" : "text-gray-400"
-                  }`}
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 dark:text-white/40"
                 />
 
                 <input
@@ -313,9 +237,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               <div>
                 <label
                   htmlFor="image"
-                  className={`mb-2 block text-sm font-semibold transition-colors ${
-                    isDark ? "text-white/80" : "text-gray-700"
-                  }`}
+                  className="mb-2 block text-sm font-semibold text-gray-700 transition-colors dark:text-white/80"
                 >
                   Profile image URL
                 </label>
@@ -323,9 +245,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
                 <div className="relative">
                   <FaImage
                     aria-hidden="true"
-                    className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm ${
-                      isDark ? "text-white/40" : "text-gray-400"
-                    }`}
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 dark:text-white/40"
                   />
 
                   <input
@@ -344,9 +264,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
             <div>
               <label
                 htmlFor="password"
-                className={`mb-2 block text-sm font-semibold transition-colors ${
-                  isDark ? "text-white/80" : "text-gray-700"
-                }`}
+                className="mb-2 block text-sm font-semibold text-gray-700 transition-colors dark:text-white/80"
               >
                 Password
               </label>
@@ -354,9 +272,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               <div className="relative">
                 <FaLock
                   aria-hidden="true"
-                  className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm ${
-                    isDark ? "text-white/40" : "text-gray-400"
-                  }`}
+                  className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 dark:text-white/40"
                 />
 
                 <input
@@ -382,9 +298,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
               <div>
                 <label
                   htmlFor="confirm-password"
-                  className={`mb-2 block text-sm font-semibold transition-colors ${
-                    isDark ? "text-white/80" : "text-gray-700"
-                  }`}
+                  className="mb-2 block text-sm font-semibold text-gray-700 transition-colors dark:text-white/80"
                 >
                   Confirm password
                 </label>
@@ -392,9 +306,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
                 <div className="relative">
                   <FaLock
                     aria-hidden="true"
-                    className={`pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm ${
-                      isDark ? "text-white/40" : "text-gray-400"
-                    }`}
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-sm text-gray-400 dark:text-white/40"
                   />
 
                   <input
@@ -416,11 +328,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
             {errorMessage && (
               <p
                 role="alert"
-                className={`rounded-xl border px-4 py-3 text-sm ${
-                  isDark
-                    ? "border-red-300/15 bg-red-300/[0.06] text-red-200"
-                    : "border-red-200 bg-red-50 text-red-700"
-                }`}
+                className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-300/15 dark:bg-red-300/[0.06] dark:text-red-200"
               >
                 {errorMessage}
               </p>
@@ -429,11 +337,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`group flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl px-5 py-4 text-sm font-bold transition focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-70 ${
-                isDark
-                  ? "bg-[#d9e9c5] text-[#142C45] shadow-[0_10px_25px_-5px_rgba(217,233,197,0.3)] hover:bg-white focus-visible:outline-[#d9e9c5]"
-                  : "bg-[#142C45] text-white shadow-md hover:bg-[#1f3f61] focus-visible:outline-[#142C45]"
-              }`}
+              className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-2xl bg-[#142C45] px-5 py-4 text-sm font-bold text-white shadow-md transition hover:bg-[#1f3f61] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#142C45] disabled:cursor-not-allowed disabled:opacity-70 dark:bg-[#d9e9c5] dark:text-[#142C45] dark:shadow-[0_10px_25px_-5px_rgba(217,233,197,0.3)] dark:hover:bg-white dark:focus-visible:outline-[#d9e9c5]"
             >
               {isSubmitting
                 ? "Please wait..."
@@ -450,30 +354,18 @@ export default function AuthForm({ mode }: AuthFormProps) {
             </button>
           </form>
 
-          <p
-            className={`mt-7 text-center text-sm transition-colors ${
-              isDark ? "text-white/50" : "text-gray-600"
-            }`}
-          >
+          <p className="mt-7 text-center text-sm text-gray-600 transition-colors dark:text-white/50">
             {isSignUp ? "Already part of Kindred?" : "New to Kindred?"}{" "}
             <Link
               href={isSignUp ? "/login" : "/sign-up"}
-              className={`font-bold underline underline-offset-4 transition ${
-                isDark
-                  ? "text-[#d9e9c5] decoration-[#d9e9c5]/30 hover:text-white"
-                  : "text-[#142C45] decoration-[#142C45]/30 hover:text-black"
-              }`}
+              className="font-bold text-[#142C45] underline decoration-[#142C45]/30 underline-offset-4 transition hover:text-black dark:text-[#d9e9c5] dark:decoration-[#d9e9c5]/30 dark:hover:text-white"
             >
               {isSignUp ? "Sign in" : "Create an account"}
             </Link>
           </p>
         </div>
 
-        <aside
-          className={`relative hidden min-h-[620px] flex-col justify-between overflow-hidden bg-[#d9e9c5] p-10 text-[#203242] lg:flex lg:p-12 ${
-            isDark ? "border-l border-white/10" : "border-l border-gray-200"
-          }`}
-        >
+        <aside className="relative hidden min-h-[620px] flex-col justify-between overflow-hidden border-l border-gray-200 bg-[#d9e9c5] p-10 text-[#203242] dark:border-white/10 lg:flex lg:p-12">
           <div
             aria-hidden="true"
             className="absolute -right-24 -top-20 h-80 w-80 rounded-full border-[40px] border-white/30"

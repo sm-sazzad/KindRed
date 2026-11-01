@@ -1,10 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FaBookmark, FaSave } from "react-icons/fa";
 import {
   FaArrowLeft,
-  FaArrowRight,
   FaCalendarDays,
   FaCheck,
   FaClock,
@@ -93,17 +91,17 @@ const EventDetailsPage = async ({
     : 0;
 
   return (
-    <div className="min-h-[65vh] bg-[#111b27] px-[5%] py-10 text-[#f6f7f2] sm:py-14 lg:py-20">
+    <div className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-10 text-[#142C45] transition-colors duration-300 sm:py-14 lg:py-20 dark:bg-[#111b27] dark:text-[#f6f7f2]">
       <div className="mx-auto max-w-7xl">
         <Link
           href="/upcomming-events"
-          className="group mb-6 inline-flex items-center gap-2 text-sm font-medium text-white/55 transition-colors hover:text-[#d9e9c5] sm:mb-8"
+          className="group mb-6 inline-flex items-center gap-2 text-sm font-medium text-[#142C45]/70 transition-colors hover:text-[#5d8338] sm:mb-8 dark:text-white/55 dark:hover:text-[#d9e9c5]"
         >
           <FaArrowLeft className="text-xs transition-transform group-hover:-translate-x-1" />
           All events
         </Link>
 
-        <article className="grid overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#192736] shadow-[0_30px_90px_-40px_rgba(0,0,0,0.8)] lg:grid-cols-[1.15fr_0.85fr]">
+        <article className="grid overflow-hidden rounded-[1.75rem] border border-gray-200 bg-white shadow-xl lg:grid-cols-[1.15fr_0.85fr] dark:border-white/10 dark:bg-[#192736] dark:shadow-[0_30px_90px_-40px_rgba(0,0,0,0.8)]">
           {/* Event Image */}
           <div className="relative min-h-[300px] bg-gradient-to-br from-[#d8c99e] via-[#87918e] to-[#344d62] sm:min-h-[440px] lg:min-h-[620px]">
             {event.imageUrl && (
@@ -141,36 +139,36 @@ const EventDetailsPage = async ({
 
           {/* Event Information */}
           <div className="flex flex-col p-6 sm:p-9 lg:p-10">
-            <p className="text-xs font-bold tracking-[0.17em] text-[#d9e9c5] uppercase">
+            <p className="text-xs font-bold tracking-[0.17em] text-[#5d8338] uppercase dark:text-[#d9e9c5]">
               Make your time matter
             </p>
 
-            <h1 className="mt-4 text-3xl leading-tight font-extrabold tracking-[-0.04em] text-white sm:text-4xl">
+            <h1 className="mt-4 text-3xl leading-tight font-extrabold tracking-[-0.04em] text-[#142C45] sm:text-4xl dark:text-white">
               {event.title}
             </h1>
 
-            <p className="mt-5 text-sm leading-7 text-white/60">
+            <p className="mt-5 text-sm leading-7 text-[#142C45]/70 dark:text-white/60">
               {event.description}
             </p>
 
-            <div className="mt-8 space-y-4 border-y border-white/10 py-6">
-              <p className="flex items-center gap-3 text-sm text-white/75">
-                <FaCalendarDays className="w-4 shrink-0 text-[#d9e9c5]" />
+            <div className="mt-8 space-y-4 border-y border-gray-200 py-6 dark:border-white/10">
+              <p className="flex items-center gap-3 text-sm text-[#142C45]/80 dark:text-white/75">
+                <FaCalendarDays className="w-4 shrink-0 text-[#5d8338] dark:text-[#d9e9c5]" />
                 {formatDate(event.eventDate)}
               </p>
 
-              <p className="flex items-center gap-3 text-sm text-white/75">
-                <FaClock className="w-4 shrink-0 text-[#d9e9c5]" />
+              <p className="flex items-center gap-3 text-sm text-[#142C45]/80 dark:text-white/75">
+                <FaClock className="w-4 shrink-0 text-[#5d8338] dark:text-[#d9e9c5]" />
                 {event.startTime} – {event.endTime}
               </p>
 
-              <p className="flex items-center gap-3 text-sm text-white/75">
-                <FaUser className="w-4 shrink-0 text-[#d9e9c5]" />
+              <p className="flex items-center gap-3 text-sm text-[#142C45]/80 dark:text-white/75">
+                <FaUser className="w-4 shrink-0 text-[#5d8338] dark:text-[#d9e9c5]" />
                 Organized by {event.organizer}
               </p>
 
-              <p className="flex items-center gap-3 text-sm text-white/75">
-                <FaUsers className="w-4 shrink-0 text-[#d9e9c5]" />
+              <p className="flex items-center gap-3 text-sm text-[#142C45]/80 dark:text-white/75">
+                <FaUsers className="w-4 shrink-0 text-[#5d8338] dark:text-[#d9e9c5]" />
                 {joined} volunteers joined
                 {capacity ? ` · ${capacity} spots` : ""}
               </p>
@@ -179,14 +177,14 @@ const EventDetailsPage = async ({
             {/* Volunteer Progress */}
             {capacity > 0 && (
               <div className="mt-6">
-                <div className="mb-2 flex justify-between text-xs text-white/50">
+                <div className="mb-2 flex justify-between text-xs text-[#142C45]/60 dark:text-white/50">
                   <span>Volunteer spots filled</span>
                   <span>{Math.round(volunteerProgress)}%</span>
                 </div>
 
-                <div className="h-2 overflow-hidden rounded-full bg-white/10">
+                <div className="h-2 overflow-hidden rounded-full bg-gray-200 dark:bg-white/10">
                   <div
-                    className="h-full rounded-full bg-[#d9e9c5]"
+                    className="h-full rounded-full bg-[#5d8338] dark:bg-[#d9e9c5]"
                     style={{ width: `${volunteerProgress}%` }}
                   />
                 </div>

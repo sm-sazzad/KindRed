@@ -95,10 +95,10 @@ const Btn = ({ event }: { event: Event }) => {
 
   return (
     <>
-      <div className="mt-5 grid grid-cols-3 gap-2 border-t border-white/10 pt-4">
+      <div className="mt-5 grid grid-cols-3 gap-2 border-t border-gray-200 pt-4 dark:border-white/10">
         <Link
           href={`/upcomming-events/${event._id}`}
-          className="inline-flex cursor-pointer items-center justify-center gap-1 rounded-lg bg-[#d9e9c5] px-2 py-2.5 text-xs font-bold text-[#203242] transition hover:bg-white"
+          className="inline-flex cursor-pointer items-center justify-center gap-1 rounded-lg bg-[#142C45] px-2 py-2.5 text-xs font-bold text-white transition hover:bg-[#1e3d5f] dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white"
         >
           View <FaArrowRight aria-hidden="true" />
         </Link>
@@ -108,7 +108,7 @@ const Btn = ({ event }: { event: Event }) => {
             setErrorMessage("");
             setDialog("edit");
           }}
-          className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-3 py-2.5 text-xs font-semibold text-white transition hover:bg-white/10"
+          className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-gray-200 bg-gray-100 px-3 py-2.5 text-xs font-semibold text-[#142C45] transition hover:bg-gray-200 dark:border-white/10 dark:bg-white/[0.06] dark:text-white dark:hover:bg-white/10"
         >
           <FaPenToSquare />
           Edit
@@ -120,7 +120,7 @@ const Btn = ({ event }: { event: Event }) => {
             setErrorMessage("");
             setDialog("delete");
           }}
-          className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-red-300/15 bg-red-400/[0.08] px-3 py-2.5 text-xs font-semibold text-red-200 transition hover:bg-red-400/15"
+          className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-xs font-semibold text-red-600 transition hover:bg-red-100 dark:border-red-300/15 dark:bg-red-400/[0.08] dark:text-red-200 dark:hover:bg-red-400/15"
         >
           <FaTrash />
           Delete
@@ -129,7 +129,7 @@ const Btn = ({ event }: { event: Event }) => {
 
       {dialog && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-[#07111c]/80 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/60 p-4 backdrop-blur-sm"
           onMouseDown={(click) => {
             if (click.target === click.currentTarget) setDialog(null);
           }}
@@ -138,11 +138,11 @@ const Btn = ({ event }: { event: Event }) => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="event-dialog-title"
-            className="my-auto w-full max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-[#192736] text-white shadow-2xl"
+            className="my-auto w-full max-w-2xl overflow-hidden rounded-3xl border border-gray-200 bg-white text-[#142C45] shadow-2xl dark:border-white/10 dark:bg-[#192736] dark:text-white"
           >
-            <div className="flex items-start justify-between border-b border-white/10 px-5 py-5 sm:px-7">
+            <div className="flex items-start justify-between border-b border-gray-200 px-5 py-5 sm:px-7 dark:border-white/10">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#d9e9c5]">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#5d8338] dark:text-[#d9e9c5]">
                   {dialog === "edit" ? "Event details" : "Please confirm"}
                 </p>
                 <h2 id="event-dialog-title" className="mt-1 text-xl font-bold">
@@ -154,7 +154,7 @@ const Btn = ({ event }: { event: Event }) => {
                 onClick={() => setDialog(null)}
                 disabled={isPending}
                 aria-label="Close dialog"
-                className="rounded-lg p-2 cursor-pointer text-white/60 transition hover:bg-white/10 hover:text-white"
+                className="cursor-pointer rounded-lg p-2 text-gray-500 transition hover:bg-gray-100 hover:text-[#142C45] dark:text-white/60 dark:hover:bg-white/10 dark:hover:text-white"
               >
                 <FaXmark />
               </button>
@@ -168,13 +168,13 @@ const Btn = ({ event }: { event: Event }) => {
                 {errorMessage && (
                   <p
                     role="alert"
-                    className="mb-5 rounded-xl border border-red-300/15 bg-red-300/[0.06] px-4 py-3 text-sm text-red-200"
+                    className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-300/15 dark:bg-red-300/[0.06] dark:text-red-200"
                   >
                     {errorMessage}
                   </p>
                 )}
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="text-sm font-medium text-white/75">
+                  <label className="text-sm font-medium text-[#142C45]/80 dark:text-white/75">
                     Title
                     <input
                       name="title"
@@ -183,7 +183,7 @@ const Btn = ({ event }: { event: Event }) => {
                       className={inputClass}
                     />
                   </label>
-                  <label className="text-sm font-medium text-white/75">
+                  <label className="text-sm font-medium text-[#142C45]/80 dark:text-white/75">
                     Category
                     <select
                       name="category"
@@ -198,61 +198,61 @@ const Btn = ({ event }: { event: Event }) => {
                       <option value="" disabled>
                         Choose a category
                       </option>
-                      {categories.map((category) => (
-                        <option key={category.id} value={category.id}>
-                          {category.name}
+                      {categories.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
                         </option>
                       ))}
                     </select>
                   </label>
-                  <label className="text-sm font-medium text-white/75 sm:col-span-2">
+                  <label className="text-sm font-medium text-[#142C45]/80 sm:col-span-2 dark:text-white/75">
                     Description
                     <textarea
                       name="description"
                       defaultValue={event.description}
-                      placeholder="Describe the event"
-                      rows={3}
-                      className={inputClass}
+                      placeholder="Event description"
+                      className={`${inputClass} min-h-24 resize-y`}
                     />
                   </label>
-                  <label className="text-sm font-medium text-white/75">
+                  <label className="text-sm font-medium text-[#142C45]/80 dark:text-white/75">
                     Event date
                     <input
                       name="eventDate"
                       type="date"
-                      min={new Date().toLocaleDateString("en-CA")}
-                      defaultValue={event.eventDate?.slice(0, 10)}
+                      defaultValue={event.eventDate}
                       className={inputClass}
                     />
                   </label>
-                  <label className="text-sm font-medium text-white/75">
-                    Start time
-                    <input
-                      name="startTime"
-                      type="time"
-                      defaultValue={event.startTime}
-                      className={inputClass}
-                    />
-                  </label>
-                  <label className="text-sm font-medium text-white/75">
-                    End time
-                    <input
-                      name="endTime"
-                      type="time"
-                      defaultValue={event.endTime}
-                      className={inputClass}
-                    />
-                  </label>
-                  <label className="text-sm font-medium text-white/75">
+                  <div className="grid grid-cols-2 gap-3">
+                    <label className="text-sm font-medium text-[#142C45]/80 dark:text-white/75">
+                      Start time
+                      <input
+                        name="startTime"
+                        type="time"
+                        defaultValue={event.startTime}
+                        className={inputClass}
+                      />
+                    </label>
+                    <label className="text-sm font-medium text-[#142C45]/80 dark:text-white/75">
+                      End time
+                      <input
+                        name="endTime"
+                        type="time"
+                        defaultValue={event.endTime}
+                        className={inputClass}
+                      />
+                    </label>
+                  </div>
+                  <label className="text-sm font-medium text-[#142C45]/80 dark:text-white/75">
                     Location
                     <input
                       name="location"
                       defaultValue={event.location}
-                      placeholder="Event location"
+                      placeholder="Location"
                       className={inputClass}
                     />
                   </label>
-                  <label className="text-sm font-medium text-white/75">
+                  <label className="text-sm font-medium text-[#142C45]/80 dark:text-white/75">
                     City
                     <input
                       name="city"
@@ -261,41 +261,48 @@ const Btn = ({ event }: { event: Event }) => {
                       className={inputClass}
                     />
                   </label>
-                  <label className="text-sm font-medium text-white/75">
+                  <label className="text-sm font-medium text-[#142C45]/80 dark:text-white/75">
                     Organizer
                     <input
                       name="organizer"
                       defaultValue={event.organizer}
-                      placeholder="Organizer name"
+                      placeholder="Organizer"
                       className={inputClass}
                     />
                   </label>
-                  <label className="text-sm font-medium text-white/75">
-                    Organizer email
+                  <label className="text-sm font-medium text-[#142C45]/80 dark:text-white/75">
+                    Volunteer capacity
                     <input
-                      name="organizerEmail"
-                      type="email"
-                      defaultValue={event.organizerEmail}
-                      placeholder="name@example.com"
+                      name="volunteerCapacity"
+                      type="number"
+                      defaultValue={event.volunteerCapacity}
+                      placeholder="100"
                       className={inputClass}
                     />
                   </label>
-                  <label className="text-sm font-medium text-white/75 sm:col-span-2">
+                  <label className="text-sm font-medium text-[#142C45]/80 sm:col-span-2 dark:text-white/75">
                     Image URL
                     <input
                       name="imageUrl"
-                      type="url"
                       defaultValue={event.imageUrl}
-                      placeholder="https://example.com/image.jpg"
+                      placeholder="https://..."
                       className={inputClass}
                     />
                   </label>
                 </div>
-                <div className="mt-6 flex justify-end">
+                <div className="mt-6 flex justify-end gap-3 border-t border-gray-200 pt-4 dark:border-white/10">
+                  <button
+                    type="button"
+                    onClick={() => setDialog(null)}
+                    disabled={isPending}
+                    className="cursor-pointer rounded-xl border border-gray-300 px-5 py-3 text-sm font-semibold text-[#142C45] transition hover:bg-gray-100 dark:border-white/10 dark:text-white/80 dark:hover:bg-white/[0.06]"
+                  >
+                    Cancel
+                  </button>
                   <button
                     type="submit"
                     disabled={isPending}
-                    className="rounded-xl cursor-pointer bg-[#d9e9c5] px-5 py-3 text-sm font-bold text-[#203242] transition hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+                    className="cursor-pointer rounded-xl bg-[#142C45] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1e3d5f] disabled:cursor-not-allowed disabled:opacity-60 dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white"
                   >
                     {isPending ? "Saving..." : "Save changes"}
                   </button>
@@ -306,24 +313,24 @@ const Btn = ({ event }: { event: Event }) => {
                 {errorMessage && (
                   <p
                     role="alert"
-                    className="mb-5 rounded-xl border border-red-300/15 bg-red-300/[0.06] px-4 py-3 text-sm text-red-200"
+                    className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-300/15 dark:bg-red-300/[0.06] dark:text-red-200"
                   >
                     {errorMessage}
                   </p>
                 )}
-                <p className="text-sm leading-6 text-white/65">
+                <p className="text-sm leading-6 text-[#142C45]/75 dark:text-white/65">
                   Are you sure you want to delete{" "}
-                  <span className="font-semibold text-white">
+                  <span className="font-semibold text-[#142C45] dark:text-white">
                     {event.title}
                   </span>
                   ?
                 </p>
-                <div className="mt-6 flex gap-3 justify-end">
+                <div className="mt-6 flex justify-end gap-3">
                   <button
                     type="button"
                     onClick={() => setDialog(null)}
                     disabled={isPending}
-                    className="rounded-xl cursor-pointer border border-white/10 px-5 py-3 text-sm font-semibold text-white/80 transition hover:bg-white/[0.06]"
+                    className="cursor-pointer rounded-xl border border-gray-300 px-5 py-3 text-sm font-semibold text-[#142C45] transition hover:bg-gray-100 dark:border-white/10 dark:text-white/80 dark:hover:bg-white/[0.06]"
                   >
                     Close
                   </button>
@@ -331,7 +338,7 @@ const Btn = ({ event }: { event: Event }) => {
                     type="button"
                     onClick={handleDelete}
                     disabled={isPending}
-                    className="rounded-xl cursor-pointer border border-white/10 px-5 py-3 text-sm font-bold text-red-300 transition hover:bg-white/[0.06] disabled:cursor-not-allowed disabled:opacity-60"
+                    className="cursor-pointer rounded-xl border border-red-300 bg-red-50 px-5 py-3 text-sm font-bold text-red-600 transition hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-transparent dark:text-red-300 dark:hover:bg-white/[0.06]"
                   >
                     {isPending ? "Deleting..." : "Delete event"}
                   </button>
@@ -346,6 +353,6 @@ const Btn = ({ event }: { event: Event }) => {
 };
 
 const inputClass =
-  "mt-2 w-full rounded-xl border border-white/10 bg-[#111b27] px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-[#d9e9c5]/60 focus:ring-2 focus:ring-[#d9e9c5]/10";
+  "mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-3 text-sm text-[#142C45] outline-none transition placeholder:text-gray-400 focus:border-[#142C45]/60 focus:ring-2 focus:ring-[#142C45]/10 dark:border-white/10 dark:bg-[#111b27] dark:text-white dark:placeholder:text-white/30 dark:focus:border-[#d9e9c5]/60 dark:focus:ring-[#d9e9c5]/10";
 
 export default Btn;

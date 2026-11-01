@@ -125,7 +125,7 @@ function EventMeta({
 
 function FeaturedEventCard({ event, index }: { event: Event; index: number }) {
   return (
-    <article className="group relative isolate min-h-[410px] overflow-hidden rounded-[1.65rem] border border-white/10 bg-[#1a2938] shadow-[0_24px_70px_-35px_rgba(0,0,0,0.8)] sm:min-h-[470px]">
+    <article className="group relative isolate min-h-[410px] overflow-hidden rounded-[1.65rem] border border-gray-200 bg-[#1a2938] shadow-[0_24px_70px_-35px_rgba(0,0,0,0.8)] sm:min-h-[470px] dark:border-white/10">
       <EventArtwork
         event={event}
         index={index}
@@ -176,7 +176,7 @@ function FeaturedEventCard({ event, index }: { event: Event; index: number }) {
 
 function SideEventCard({ event, index }: { event: Event; index: number }) {
   return (
-    <article className="group relative flex min-h-0 overflow-hidden rounded-2xl border border-white/10 bg-[#1a2938] p-3.5 transition-colors hover:border-white/20 sm:p-4">
+    <article className="group relative flex min-h-0 overflow-hidden rounded-2xl border border-gray-200 bg-[#F7F6F0] p-3.5 transition-colors hover:border-gray-300 sm:p-4 dark:border-white/10 dark:bg-[#1a2938] dark:hover:border-white/20">
       <div className="relative min-h-[126px] w-[34%] shrink-0 overflow-hidden rounded-xl sm:min-h-[144px] sm:w-[31%]">
         <EventArtwork
           event={event}
@@ -190,11 +190,11 @@ function SideEventCard({ event, index }: { event: Event; index: number }) {
           {event.category}
         </span>
 
-        <h3 className="mt-2 line-clamp-2 text-sm leading-5 font-bold text-white sm:text-base">
+        <h3 className="mt-2 line-clamp-2 text-sm leading-5 font-bold text-[#142C45] sm:text-base dark:text-white">
           {event.title}
         </h3>
 
-        <p className="mt-1 line-clamp-1 text-[10px] text-white/50">
+        <p className="mt-1 line-clamp-1 text-[10px] text-[#142C45]/60 dark:text-white/50">
           {[
             event.city,
             Number(event.joinedVolunteers || 0).toLocaleString("en-BD") +
@@ -206,7 +206,7 @@ function SideEventCard({ event, index }: { event: Event; index: number }) {
 
         <Link
           href={`/upcomming-events/${event._id}`}
-          className="mt-auto inline-flex items-center gap-1 pt-2 text-[11px] font-bold text-[#d9e9c5] underline decoration-white/30 underline-offset-4 transition-colors hover:text-white"
+          className="mt-auto inline-flex items-center gap-1 pt-2 text-[11px] font-bold text-[#2e593a] underline decoration-[#2e593a]/30 underline-offset-4 transition-colors hover:text-[#142C45] dark:text-[#d9e9c5] dark:decoration-white/30 dark:hover:text-white"
         >
           View details
           <FaArrowRight className="text-[9px]" />
@@ -218,7 +218,7 @@ function SideEventCard({ event, index }: { event: Event; index: number }) {
 
 function SmallEventCard({ event, index }: { event: Event; index: number }) {
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-white/10 bg-[#1a2938] transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-xl">
+    <article className="group relative overflow-hidden rounded-2xl border border-gray-200 bg-[#F7F6F0] transition-all duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl dark:border-white/10 dark:bg-[#1a2938] dark:hover:border-white/20">
       <div className="relative h-40 overflow-hidden sm:h-44">
         <EventArtwork
           event={event}
@@ -232,25 +232,25 @@ function SmallEventCard({ event, index }: { event: Event; index: number }) {
       </div>
 
       <div className="p-4">
-        <div className="flex items-center justify-between gap-3 text-[10px] text-white/50">
+        <div className="flex items-center justify-between gap-3 text-[10px] text-[#142C45]/60 dark:text-white/50">
           <span className="truncate">{event.city || event.location}</span>
           <span className="shrink-0">{formatDate(event.eventDate)}</span>
         </div>
 
-        <h3 className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 font-bold text-white">
+        <h3 className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 font-bold text-[#142C45] dark:text-white">
           {event.title}
         </h3>
 
-        <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
-          <span className="inline-flex items-center gap-1.5 text-[10px] text-white/55">
-            <FaUsers className="text-[#d9e9c5]" />
+        <div className="mt-3 flex items-center justify-between border-t border-gray-200 pt-3 dark:border-white/10">
+          <span className="inline-flex items-center gap-1.5 text-[10px] text-[#142C45]/70 dark:text-white/55">
+            <FaUsers className="text-[#5d8338] dark:text-[#d9e9c5]" />
             {Number(event.joinedVolunteers || 0).toLocaleString("en-BD")} joined
           </span>
 
           <Link
             href={`/upcomming-events/${event._id}`}
             aria-label={`View ${event.title}`}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-[#d9e9c5] transition-colors hover:bg-[#d9e9c5] hover:text-[#172737]"
+            className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-[#142C45] transition-colors hover:bg-[#142C45] hover:text-white dark:border-white/10 dark:text-[#d9e9c5] dark:hover:bg-[#d9e9c5] dark:hover:text-[#172737]"
           >
             <FaArrowRight className="text-xs" />
           </Link>
@@ -285,16 +285,16 @@ const FeaturedPosts = async () => {
   const bottomEvents = remainingEvents.slice(2, 5);
 
   return (
-    <section className="bg-[#111b27] px-[5%] py-16 text-[#f6f7f2] sm:py-20 lg:py-24">
-      <div className="mx-auto max-w-7xl border-t border-white/10 pt-9 sm:pt-11">
+    <section className="bg-white px-[5%] py-16 text-[#142C45] transition-colors duration-300 sm:py-20 lg:py-24 dark:bg-[#111b27] dark:text-[#f6f7f2]">
+      <div className="mx-auto max-w-7xl border-t border-gray-200 pt-9 transition-colors sm:pt-11 dark:border-white/10">
         <div className="mb-8 flex items-end justify-between gap-6 sm:mb-10">
           <div>
-            <p className="mb-3 inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#d9e9c5] uppercase">
-              <span className="h-px w-6 bg-[#d9e9c5]" />
+            <p className="mb-3 inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#5d8338] uppercase dark:text-[#d9e9c5]">
+              <span className="h-px w-6 bg-[#5d8338] dark:bg-[#d9e9c5]" />
               Make a difference
             </p>
 
-            <h2 className="text-3xl leading-[1.02] font-extrabold tracking-[-0.045em] sm:text-4xl md:text-5xl">
+            <h2 className="text-3xl leading-[1.02] font-extrabold tracking-[-0.045em] text-[#142C45] sm:text-4xl md:text-5xl dark:text-white">
               Find Your Next
               <br />
               Way to Give Back.
@@ -303,7 +303,7 @@ const FeaturedPosts = async () => {
 
           <Link
             href="/upcomming-events"
-            className="mb-1 inline-flex shrink-0 items-center gap-2 border-b border-white/40 pb-1 text-xs font-semibold text-white/75 transition-colors hover:border-[#d9e9c5] hover:text-[#d9e9c5]"
+            className="mb-1 inline-flex shrink-0 items-center gap-2 border-b border-gray-300 pb-1 text-xs font-semibold text-[#142C45]/75 transition-colors hover:border-[#5d8338] hover:text-[#5d8338] dark:border-white/40 dark:text-white/75 dark:hover:border-[#d9e9c5] dark:hover:text-[#d9e9c5]"
           >
             View all events
             <FaArrowRight className="text-[10px]" />
@@ -311,7 +311,7 @@ const FeaturedPosts = async () => {
         </div>
 
         {events.length === 0 ? (
-          <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-10 text-center text-sm text-white/60">
+          <div className="rounded-2xl border border-gray-200 bg-gray-50 px-5 py-10 text-center text-sm text-[#142C45]/70 dark:border-white/10 dark:bg-white/[0.04] dark:text-white/60">
             No events are available right now. Check back soon to find a way to
             give back.
           </div>

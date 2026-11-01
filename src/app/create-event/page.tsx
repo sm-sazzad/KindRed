@@ -8,7 +8,7 @@ import { useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
 const inputClass =
-  "mt-2 w-full rounded-xl border border-white/10 bg-[#111b27] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-[#d9e9c5]/60 focus:ring-2 focus:ring-[#d9e9c5]/10";
+  "mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-[#142C45] outline-none transition placeholder:text-gray-400 focus:border-[#142C45]/60 focus:ring-2 focus:ring-[#142C45]/10 dark:border-white/10 dark:bg-[#111b27] dark:text-white dark:placeholder:text-white/30 dark:focus:border-[#d9e9c5]/60 dark:focus:ring-[#d9e9c5]/10";
 
 export default function CreateEventPage() {
   const router = useRouter();
@@ -78,29 +78,29 @@ export default function CreateEventPage() {
   }
 
   return (
-    <section className="min-h-screen bg-[#111b27] px-[5%] py-12 text-[#f6f7f2] sm:py-16">
+    <section className="min-h-screen bg-[#F7F6F0] px-[5%] py-12 text-[#142C45] transition-colors duration-300 sm:py-16 dark:bg-[#111b27] dark:text-[#f6f7f2]">
       <div className="mx-auto max-w-4xl">
         <div className="mb-8">
-          <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d9e9c5] text-lg text-[#203242]">
+          <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-[#d9e9c5] text-lg text-[#142C45]">
             <FaCalendarDays aria-hidden="true" />
           </span>
-          <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-[#d9e9c5]/70">
+          <p className="mt-5 text-xs font-bold uppercase tracking-[0.2em] text-[#5d8338] dark:text-[#d9e9c5]/70">
             Bring your community together
           </p>
-          <h1 className="mt-2 text-3xl font-extrabold tracking-tight sm:text-4xl">
+          <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-[#142C45] sm:text-4xl dark:text-white">
             Create an event
           </h1>
-          <p className="mt-2 text-sm text-white/55">
+          <p className="mt-2 text-sm text-[#142C45]/60 dark:text-white/55">
             Share the details and invite people to make a difference with you.
           </p>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-3xl border border-white/10 bg-[#192736] p-5 shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)] sm:p-8"
+          className="rounded-3xl border border-gray-200 bg-white p-5 shadow-xl sm:p-8 dark:border-white/10 dark:bg-[#192736] dark:shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)]"
         >
           <div className="grid gap-5 sm:grid-cols-2">
-            <label className="text-sm font-semibold text-white/80">
+            <label className="text-sm font-semibold text-[#142C45]/80 dark:text-white/80">
               Event title
               <input
                 className={inputClass}
@@ -110,7 +110,7 @@ export default function CreateEventPage() {
               />
             </label>
 
-            <label className="text-sm font-semibold text-white/80">
+            <label className="text-sm font-semibold text-[#142C45]/80 dark:text-white/80">
               Category
               <select
                 className={inputClass}
@@ -129,7 +129,7 @@ export default function CreateEventPage() {
               </select>
             </label>
 
-            <label className="text-sm font-semibold text-white/80 sm:col-span-2">
+            <label className="text-sm font-semibold text-[#142C45]/80 sm:col-span-2 dark:text-white/80">
               Description
               <textarea
                 className={`${inputClass} min-h-32 resize-y`}
@@ -139,7 +139,7 @@ export default function CreateEventPage() {
               />
             </label>
 
-            <label className="text-sm font-semibold text-white/80">
+            <label className="text-sm font-semibold text-[#142C45]/80 dark:text-white/80">
               Event date
               <input
                 className={inputClass}
@@ -150,7 +150,7 @@ export default function CreateEventPage() {
               />
             </label>
             <div className="grid grid-cols-2 gap-3">
-              <label className="text-sm font-semibold text-white/80">
+              <label className="text-sm font-semibold text-[#142C45]/80 dark:text-white/80">
                 Start time
                 <input
                   className={inputClass}
@@ -159,7 +159,7 @@ export default function CreateEventPage() {
                   required
                 />
               </label>
-              <label className="text-sm font-semibold text-white/80">
+              <label className="text-sm font-semibold text-[#142C45]/80 dark:text-white/80">
                 End time
                 <input
                   className={inputClass}
@@ -170,7 +170,7 @@ export default function CreateEventPage() {
               </label>
             </div>
 
-            <label className="text-sm font-semibold text-white/80">
+            <label className="text-sm font-semibold text-[#142C45]/80 dark:text-white/80">
               Location
               <input
                 className={inputClass}
@@ -179,7 +179,7 @@ export default function CreateEventPage() {
                 required
               />
             </label>
-            <label className="text-sm font-semibold text-white/80">
+            <label className="text-sm font-semibold text-[#142C45]/80 dark:text-white/80">
               City
               <input
                 className={inputClass}
@@ -189,7 +189,7 @@ export default function CreateEventPage() {
               />
             </label>
 
-            <label className="text-sm font-semibold text-white/80">
+            <label className="text-sm font-semibold text-[#142C45]/80 dark:text-white/80">
               Organizer
               <input
                 className={inputClass}
@@ -198,7 +198,7 @@ export default function CreateEventPage() {
                 required
               />
             </label>
-            <label className="text-sm font-semibold text-white/80">
+            <label className="text-sm font-semibold text-[#142C45]/80 dark:text-white/80">
               Organizer email
               <input
                 className={inputClass}
@@ -209,7 +209,7 @@ export default function CreateEventPage() {
               />
             </label>
 
-            <label className="text-sm font-semibold text-white/80 sm:col-span-2">
+            <label className="text-sm font-semibold text-[#142C45]/80 sm:col-span-2 dark:text-white/80">
               Image URL
               <input
                 className={inputClass}
@@ -224,7 +224,7 @@ export default function CreateEventPage() {
           {errorMessage && (
             <p
               role="alert"
-              className="mt-5 rounded-xl border border-red-400/20 bg-red-400/10 px-4 py-3 text-sm text-red-200"
+              className="mt-5 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-600 dark:border-red-400/20 dark:bg-red-400/10 dark:text-red-200"
             >
               {errorMessage}
             </p>
@@ -233,7 +233,7 @@ export default function CreateEventPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#d9e9c5] px-5 py-3.5 text-sm font-bold text-[#203242] transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#d9e9c5] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+            className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#142C45] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#1e3d5f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#142C45] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white dark:focus-visible:outline-[#d9e9c5]"
           >
             {isSubmitting ? "Creating event..." : "Create event"}
             {!isSubmitting && (

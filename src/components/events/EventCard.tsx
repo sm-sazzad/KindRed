@@ -64,7 +64,7 @@ export default function EventCard({
     typeof event.imageUrl === "string" ? event.imageUrl.trim() : "";
 
   return (
-    <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.4rem] border border-white/[0.09] bg-[#192736] shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_28px_70px_-35px_rgba(0,0,0,0.9)]">
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[1.4rem] border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl dark:border-white/[0.09] dark:bg-[#192736] dark:hover:border-white/20 dark:shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)]">
       <div
         className={`relative h-52 shrink-0 overflow-hidden bg-gradient-to-br sm:h-56 ${cardGradients[index % cardGradients.length]}`}
       >
@@ -111,17 +111,17 @@ export default function EventCard({
       </div>
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <h2 className="line-clamp-2 min-h-12 text-lg leading-6 font-bold tracking-tight text-white transition-colors group-hover:text-[#d9e9c5]">
+        <h2 className="line-clamp-2 min-h-12 text-lg leading-6 font-bold tracking-tight text-[#142C45] transition-colors group-hover:text-[#254f38] dark:text-white dark:group-hover:text-[#d9e9c5]">
           {event.title}
         </h2>
-        <p className="mt-2 line-clamp-2 min-h-10 text-xs leading-5 text-white/50">
+        <p className="mt-2 line-clamp-2 min-h-10 text-xs leading-5 text-[#142C45]/70 dark:text-white/50">
           {event.description || "Join your community and make a difference."}
         </p>
 
-        <div className="mt-4 flex items-center gap-2 text-xs text-white/60">
+        <div className="mt-4 flex items-center gap-2 text-xs text-[#142C45]/70 dark:text-white/60">
           <FaLocationDot
             aria-hidden="true"
-            className="shrink-0 text-[#d9e9c5]"
+            className="shrink-0 text-[#5d8338] dark:text-[#d9e9c5]"
           />
           <span className="truncate">
             {[event.location, event.city].filter(Boolean).join(", ") ||
@@ -129,14 +129,14 @@ export default function EventCard({
           </span>
         </div>
 
-        <div className="mt-4 border-t border-white/10 pt-4">
+        <div className="mt-4 border-t border-gray-200 pt-4 dark:border-white/10">
           <div className="flex items-center justify-between gap-3 text-xs">
-            <span className="inline-flex items-center gap-2 text-white/65">
-              <FaUsers aria-hidden="true" className="text-[#d9e9c5]" />
+            <span className="inline-flex items-center gap-2 text-[#142C45]/80 dark:text-white/65">
+              <FaUsers aria-hidden="true" className="text-[#5d8338] dark:text-[#d9e9c5]" />
               {joined.toLocaleString("en-BD")} joined
             </span>
             {capacity > 0 && (
-              <span className="text-[10px] text-white/40">
+              <span className="text-[10px] text-[#142C45]/50 dark:text-white/40">
                 {joined.toLocaleString("en-BD")} /{" "}
                 {capacity.toLocaleString("en-BD")} volunteers
               </span>
@@ -149,10 +149,10 @@ export default function EventCard({
               aria-valuenow={Math.round(volunteerProgress)}
               aria-valuemin={0}
               aria-valuemax={100}
-              className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10"
+              className="mt-3 h-1.5 overflow-hidden rounded-full bg-gray-200 dark:bg-white/10"
             >
               <div
-                className="h-full rounded-full bg-[#d9e9c5] transition-[width] duration-500"
+                className="h-full rounded-full bg-[#5d8338] transition-[width] duration-500 dark:bg-[#d9e9c5]"
                 style={{ width: `${volunteerProgress}%` }}
               />
             </div>
@@ -161,7 +161,7 @@ export default function EventCard({
 
         <div className="mt-auto pt-5">
           {event.startTime && (
-            <p className="mb-3 inline-flex items-center gap-2 text-[10px] text-white/40">
+            <p className="mb-3 inline-flex items-center gap-2 text-[10px] text-[#142C45]/50 dark:text-white/40">
               <FaClock aria-hidden="true" />
               {event.startTime}
               {event.endTime ? ` – ${event.endTime}` : ""}
@@ -170,7 +170,7 @@ export default function EventCard({
           )}
           <Link
             href={`/upcomming-events/${event._id}`}
-            className="group/button inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.045] px-4 py-3 text-xs font-bold text-white transition-all duration-300 hover:border-[#d9e9c5]/30 hover:bg-[#d9e9c5] hover:text-[#203228] focus-visible:ring-2 focus-visible:ring-[#d9e9c5] focus-visible:outline-none"
+            className="group/button inline-flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-3 text-xs font-bold text-[#142C45] transition-all duration-300 hover:bg-[#142C45] hover:text-white focus-visible:ring-2 focus-visible:ring-[#142C45] focus-visible:outline-none dark:border-white/10 dark:bg-white/[0.045] dark:text-white dark:hover:border-[#d9e9c5]/30 dark:hover:bg-[#d9e9c5] dark:hover:text-[#203228] dark:focus-visible:ring-[#d9e9c5]"
           >
             View details
             <FaArrowRight
@@ -183,7 +183,7 @@ export default function EventCard({
 
       <span
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 h-0.5 w-0 bg-[#d9e9c5] transition-[width] duration-500 ease-out group-hover:w-full group-focus-within:w-full"
+        className="absolute inset-x-0 bottom-0 h-0.5 w-0 bg-[#5d8338] transition-[width] duration-500 ease-out group-hover:w-full group-focus-within:w-full dark:bg-[#d9e9c5]"
       />
     </article>
   );

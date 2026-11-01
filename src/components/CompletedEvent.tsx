@@ -100,21 +100,21 @@ const completed = [
     status: "completed",
   },
   {
-    title: "Community Health Checkup Camp",
+    title: "Free Health Checkup Camp",
     category: "Healthcare",
     categoryId: "healthcare",
     description:
-      "Provided free basic health checkups and health awareness services to local residents with the help of medical volunteers.",
+      "Offered basic medical consultations, health screenings, and free medicines to people with limited healthcare access.",
     eventDate: "2026-10-25",
     startTime: "09:00",
     endTime: "16:00",
-    location: "Kumarkhali Community Center",
-    city: "Kumarkhali",
-    organizer: "Healthy Life Organization",
-    organizerEmail: "healthylife@example.com",
-    joinedVolunteers: 36,
+    location: "Community Center",
+    city: "Kushtia",
+    organizer: "Care Bangladesh",
+    organizerEmail: "carebangladesh@example.com",
+    joinedVolunteers: 38,
     imageUrl:
-      "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=1200&q=80",
     status: "completed",
   },
 ];
@@ -123,28 +123,28 @@ const CompletedEvent = () => {
   return (
     <section
       aria-labelledby="completed-events-heading"
-      className="relative overflow-hidden bg-[#111b27] px-[5%] py-16 text-[#f6f7f2] sm:py-20 lg:py-24"
+      className="relative overflow-hidden bg-white px-[5%] py-16 text-[#142C45] transition-colors duration-300 sm:py-20 lg:py-24 dark:bg-[#111b27] dark:text-[#f6f7f2]"
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 right-[12%] h-80 w-80 rounded-full bg-[#d9e9c5]/[0.045] blur-3xl"
+        className="pointer-events-none absolute -top-32 right-[12%] h-80 w-80 rounded-full bg-[#d9e9c5]/[0.08] blur-3xl"
       />
 
-      <div className="relative mx-auto max-w-7xl border-t border-white/10 pt-9 sm:pt-11">
+      <div className="relative mx-auto max-w-7xl border-t border-gray-200 pt-9 transition-colors sm:pt-11 dark:border-white/10">
         <div className="mb-8 flex flex-col gap-6 sm:mb-10 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
-            <p className="mb-3 inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#d9e9c5] uppercase">
-              <span className="h-px w-6 bg-[#d9e9c5]" />A little good goes a
+            <p className="mb-3 inline-flex items-center gap-2 text-[10px] font-bold tracking-[0.2em] text-[#5d8338] uppercase dark:text-[#d9e9c5]">
+              <span className="h-px w-6 bg-[#5d8338] dark:bg-[#d9e9c5]" />A little good goes a
               long way
             </p>
             <h2
               id="completed-events-heading"
-              className="text-3xl leading-[1.04] font-extrabold tracking-[-0.045em] sm:text-4xl md:text-5xl"
+              className="text-3xl leading-[1.04] font-extrabold tracking-[-0.045em] text-[#142C45] sm:text-4xl md:text-5xl dark:text-white"
             >
               Every act leaves
               <br className="hidden sm:block" /> a mark.
             </h2>
-            <p className="mt-4 max-w-xl text-sm leading-6 text-white/55 sm:text-base">
+            <p className="mt-4 max-w-xl text-sm leading-6 text-[#142C45]/70 sm:text-base dark:text-white/55">
               These moments happened because people showed up for one another.
               Take a look at the good your community has already made possible.
             </p>
@@ -165,7 +165,7 @@ const CompletedEvent = () => {
             return (
               <article
                 key={`${event.categoryId}-${event.eventDate}`}
-                className="group relative overflow-hidden rounded-[1.4rem] border border-white/[0.09] bg-[#192736] shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-1 hover:border-white/20 hover:shadow-[0_28px_70px_-35px_rgba(0,0,0,0.9)]"
+                className="group relative overflow-hidden rounded-[1.4rem] border border-gray-200 bg-[#F7F6F0] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl dark:border-white/[0.09] dark:bg-[#192736] dark:hover:border-white/20 dark:shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)]"
               >
                 <div className="relative h-52 overflow-hidden sm:h-56">
                   <Image
@@ -198,31 +198,31 @@ const CompletedEvent = () => {
                 </div>
 
                 <div className="p-5 sm:p-6">
-                  <h3 className="line-clamp-2 min-h-12 text-lg leading-6 font-bold tracking-tight text-white transition-colors group-hover:text-[#d9e9c5]">
+                  <h3 className="line-clamp-2 min-h-12 text-lg leading-6 font-bold tracking-tight text-[#142C45] transition-colors group-hover:text-[#254f38] dark:text-white dark:group-hover:text-[#d9e9c5]">
                     {event.title}
                   </h3>
-                  <p className="mt-2 line-clamp-2 min-h-10 text-xs leading-5 text-white/50">
+                  <p className="mt-2 line-clamp-2 min-h-10 text-xs leading-5 text-[#142C45]/60 dark:text-white/50">
                     {event.description}
                   </p>
 
-                  <div className="mt-5 flex items-center justify-between gap-3 border-t border-white/10 pt-4">
-                    <span className="inline-flex min-w-0 items-center gap-2 text-xs text-white/65">
+                  <div className="mt-5 flex items-center justify-between gap-3 border-t border-gray-200 pt-4 dark:border-white/10">
+                    <span className="inline-flex min-w-0 items-center gap-2 text-xs text-[#142C45]/70 dark:text-white/65">
                       <FaLocationDot
                         aria-hidden="true"
-                        className="shrink-0 text-[#d9e9c5]"
+                        className="shrink-0 text-[#5d8338] dark:text-[#d9e9c5]"
                       />
                       <span className="truncate">
                         {event.location}, {event.city}
                       </span>
                     </span>
-                    <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white/[0.06] px-2.5 py-1.5 text-[10px] font-semibold text-white/75">
-                      <FaUsers aria-hidden="true" className="text-[#d9e9c5]" />
+                    <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-gray-200/60 px-2.5 py-1.5 text-[10px] font-semibold text-[#142C45] dark:bg-white/[0.06] dark:text-white/75">
+                      <FaUsers aria-hidden="true" className="text-[#5d8338] dark:text-[#d9e9c5]" />
                       {event.joinedVolunteers}
                     </span>
                   </div>
-                  <p className="mt-3 truncate text-[10px] text-white/35">
+                  <p className="mt-3 truncate text-[10px] text-[#142C45]/50 dark:text-white/35">
                     Organized by{" "}
-                    <span className="font-medium text-white/55">
+                    <span className="font-medium text-[#142C45]/70 dark:text-white/55">
                       {event.organizer}
                     </span>
                   </p>
@@ -232,18 +232,18 @@ const CompletedEvent = () => {
           })}
         </div>
 
-        <div className="mt-7 flex flex-col items-start justify-between gap-4 rounded-2xl border border-white/10 bg-gradient-to-r from-[#1b3042] to-[#192736] p-5 sm:mt-8 sm:flex-row sm:items-center sm:px-7 sm:py-6">
+        <div className="mt-7 flex flex-col items-start justify-between gap-4 rounded-2xl border border-gray-200 bg-[#F7F6F0] p-5 sm:mt-8 sm:flex-row sm:items-center sm:px-7 sm:py-6 dark:border-white/10 dark:bg-gradient-to-r dark:from-[#1b3042] dark:to-[#192736]">
           <div>
-            <p className="text-sm font-bold text-white">
+            <p className="text-sm font-bold text-[#142C45] dark:text-white">
               The next good story could be yours.
             </p>
-            <p className="mt-1 text-xs text-white/50">
+            <p className="mt-1 text-xs text-[#142C45]/60 dark:text-white/50">
               Find a community event and be part of what happens next.
             </p>
           </div>
           <Link
             href="/upcomming-events"
-            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#d9e9c5] px-5 py-3 text-xs font-bold text-[#21342b] transition-all hover:bg-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-[#142C45] px-5 py-3 text-xs font-bold text-white transition-all hover:bg-[#1e3d5f] focus-visible:ring-2 focus-visible:ring-[#142C45] focus-visible:outline-none dark:bg-[#d9e9c5] dark:text-[#21342b] dark:hover:bg-white dark:focus-visible:ring-white"
           >
             Explore events
             <FaArrowRight aria-hidden="true" className="text-[10px]" />

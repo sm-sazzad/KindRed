@@ -4,8 +4,7 @@ import { authClient, useSession } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+import { useState } from "react";
 import { FaHandHoldingHeart } from "react-icons/fa";
 import {
   FaArrowRightFromBracket,
@@ -22,16 +21,8 @@ import ThemeToggle from "./ThemeToggle";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const session = useSession();
-  const { theme, resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark = !mounted || (resolvedTheme || theme) === "dark";
 
   const handleToggleMenu = () => {
     setIsOpen(true);
@@ -39,13 +30,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header
-        className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
-          isDark
-            ? "border-white/10 bg-[#142C45] text-white"
-            : "border-gray-200 bg-white text-[#142C45] shadow-sm"
-        }`}
-      >
+      <header className="sticky top-0 z-50 border-b border-gray-200 bg-white transition-colors duration-300 dark:border-white/10 dark:bg-[#142C45]">
         <nav className="mx-auto flex w-[90%] max-w-7xl items-center justify-between py-4">
           {/* Logo */}
           <Link href="/" className="group flex items-center gap-3">
@@ -54,21 +39,10 @@ const Navbar = () => {
             </div>
 
             <div>
-              <h1
-                className={`text-2xl font-extrabold tracking-tight transition-colors ${
-                  isDark ? "text-white" : "text-[#142C45]"
-                }`}
-              >
-                Kindred
-                <span className={isDark ? "text-[#D9E9C5]" : "text-[#8CA875]"}>
-                  .
-                </span>
+              <h1 className="text-2xl font-extrabold tracking-tight text-[#142C45] transition-colors dark:text-white">
+                Kindred<span className="text-[#8CA875] dark:text-[#D9E9C5]">.</span>
               </h1>
-              <p
-                className={`text-[9px] font-medium uppercase tracking-[2.5px] transition-colors ${
-                  isDark ? "text-white/55" : "text-[#142C45]/60"
-                }`}
-              >
+              <p className="text-[9px] font-medium uppercase tracking-[2.5px] text-[#142C45]/60 transition-colors dark:text-white/55">
                 Together for change
               </p>
             </div>
@@ -80,12 +54,8 @@ const Navbar = () => {
               href="/"
               className={`text-sm font-semibold transition-colors ${
                 pathname === "/"
-                  ? isDark
-                    ? "text-[#D9E9C5]"
-                    : "text-[#142C45] font-bold"
-                  : isDark
-                    ? "text-white/70 hover:text-white"
-                    : "text-[#142C45]/70 hover:text-[#142C45]"
+                  ? "text-[#142C45] dark:text-[#D9E9C5]"
+                  : "text-[#142C45]/70 hover:text-[#142C45] dark:text-white/70 dark:hover:text-white"
               }`}
             >
               Home
@@ -95,12 +65,8 @@ const Navbar = () => {
               href="/upcomming-events"
               className={`text-sm font-semibold transition-colors ${
                 pathname.startsWith("/upcomming-events")
-                  ? isDark
-                    ? "text-[#D9E9C5]"
-                    : "text-[#142C45] font-bold"
-                  : isDark
-                    ? "text-white/70 hover:text-white"
-                    : "text-[#142C45]/70 hover:text-[#142C45]"
+                  ? "text-[#142C45] dark:text-[#D9E9C5]"
+                  : "text-[#142C45]/70 hover:text-[#142C45] dark:text-white/70 dark:hover:text-white"
               }`}
             >
               Upcoming Events
@@ -119,9 +85,7 @@ const Navbar = () => {
                   aria-label="Toggle profile menu"
                   aria-expanded={isProfileOpen}
                   aria-haspopup="menu"
-                  className={`flex cursor-pointer items-center gap-2 rounded-full p-1.5 transition ${
-                    isDark ? "hover:bg-white/10" : "hover:bg-gray-100"
-                  } focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9E9C5]`}
+                  className="flex cursor-pointer items-center gap-2 rounded-full p-1.5 transition hover:bg-gray-100 dark:hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9E9C5]"
                 >
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-[#D9E9C5] bg-[#D9E9C5] text-sm font-bold text-[#142C45]">
                     {session.data.user.image ? (
@@ -138,34 +102,22 @@ const Navbar = () => {
                   </span>
                   <FaChevronDown
                     aria-hidden="true"
-                    className={`text-xs transition-transform duration-200 ${
-                      isDark ? "text-[#D9E9C5]" : "text-[#142C45]"
-                    } ${isProfileOpen ? "rotate-180" : ""}`}
+                    className={`text-xs text-[#142C45] transition-transform duration-200 dark:text-[#D9E9C5] ${
+                      isProfileOpen ? "rotate-180" : ""
+                    }`}
                   />
                 </button>
 
                 {isProfileOpen && (
                   <div
                     role="menu"
-                    className={`absolute right-0 top-full z-[70] mt-3 w-72 overflow-hidden rounded-2xl border ${
-                      isDark
-                        ? "border-white/10 bg-[#101b2c] text-white shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
-                        : "border-gray-200 bg-white text-[#142C45] shadow-[0_16px_40px_rgba(0,0,0,0.12)]"
-                    }`}
+                    className="absolute right-0 top-full z-[70] mt-3 w-72 overflow-hidden rounded-2xl border border-gray-200 bg-white text-[#142C45] shadow-[0_16px_40px_rgba(0,0,0,0.12)] dark:border-white/10 dark:bg-[#101b2c] dark:text-white dark:shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
                   >
-                    <div
-                      className={`border-b px-5 py-4 ${
-                        isDark ? "border-white/10" : "border-gray-100"
-                      }`}
-                    >
+                    <div className="border-b border-gray-100 px-5 py-4 dark:border-white/10">
                       <p className="truncate font-bold">
                         {session.data.user.name || "Kindred member"}
                       </p>
-                      <p
-                        className={`mt-1 truncate text-sm ${
-                          isDark ? "text-slate-400" : "text-gray-500"
-                        }`}
-                      >
+                      <p className="mt-1 truncate text-sm text-gray-500 dark:text-slate-400">
                         {session.data.user.email}
                       </p>
                     </div>
@@ -175,11 +127,7 @@ const Navbar = () => {
                         href="/create-event"
                         role="menuitem"
                         onClick={() => setIsProfileOpen(false)}
-                        className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${
-                          isDark
-                            ? "text-slate-200 hover:bg-white/[0.07] hover:text-[#D9E9C5]"
-                            : "text-gray-700 hover:bg-gray-100 hover:text-[#142C45]"
-                        }`}
+                        className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 hover:text-[#142C45] dark:text-slate-200 dark:hover:bg-white/[0.07] dark:hover:text-[#D9E9C5]"
                       >
                         <FaCirclePlus className="text-[#0d9488] dark:text-[#42d4bd]" />
                         Create Event
@@ -188,11 +136,7 @@ const Navbar = () => {
                         href="/manage-events"
                         role="menuitem"
                         onClick={() => setIsProfileOpen(false)}
-                        className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${
-                          isDark
-                            ? "text-slate-200 hover:bg-white/[0.07] hover:text-[#D9E9C5]"
-                            : "text-gray-700 hover:bg-gray-100 hover:text-[#142C45]"
-                        }`}
+                        className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 hover:text-[#142C45] dark:text-slate-200 dark:hover:bg-white/[0.07] dark:hover:text-[#D9E9C5]"
                       >
                         <FaGear className="text-[#6366f1] dark:text-[#8b83ff]" />
                         Manage Events
@@ -201,22 +145,14 @@ const Navbar = () => {
                         href="/joined-events"
                         role="menuitem"
                         onClick={() => setIsProfileOpen(false)}
-                        className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${
-                          isDark
-                            ? "text-slate-200 hover:bg-white/[0.07] hover:text-[#D9E9C5]"
-                            : "text-gray-700 hover:bg-gray-100 hover:text-[#142C45]"
-                        }`}
+                        className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-gray-700 transition hover:bg-gray-100 hover:text-[#142C45] dark:text-slate-200 dark:hover:bg-white/[0.07] dark:hover:text-[#D9E9C5]"
                       >
                         <FaCircleCheck className="text-[#059669] dark:text-[#00c99a]" />
                         Joined Events
                       </Link>
                     </div>
 
-                    <div
-                      className={`border-t p-2 ${
-                        isDark ? "border-white/10" : "border-gray-100"
-                      }`}
-                    >
+                    <div className="border-t border-gray-100 p-2 dark:border-white/10">
                       <button
                         type="button"
                         role="menuitem"
@@ -231,11 +167,7 @@ const Navbar = () => {
                             );
                           }
                         }}
-                        className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${
-                          isDark
-                            ? "text-[#ff7777] hover:bg-red-400/10"
-                            : "text-red-600 hover:bg-red-50"
-                        }`}
+                        className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50 dark:text-[#ff7777] dark:hover:bg-red-400/10"
                       >
                         <FaArrowRightFromBracket />
                         Sign out
@@ -248,11 +180,7 @@ const Navbar = () => {
               <>
                 <Link
                   href="/login"
-                  className={`text-sm font-semibold transition-colors ${
-                    isDark
-                      ? "text-white hover:text-[#D9E9C5]"
-                      : "text-[#142C45] hover:text-[#285789]"
-                  }`}
+                  className="text-sm font-semibold text-[#142C45] transition-colors hover:text-[#285789] dark:text-white dark:hover:text-[#D9E9C5]"
                 >
                   Login
                 </Link>
@@ -270,9 +198,7 @@ const Navbar = () => {
             <button
               onClick={handleToggleMenu}
               aria-label="Open navigation menu"
-              className={`cursor-pointer text-2xl md:hidden ${
-                isDark ? "text-white" : "text-[#142C45]"
-              }`}
+              className="cursor-pointer text-2xl text-[#142C45] dark:text-white md:hidden"
             >
               <HiOutlineMenuAlt3 />
             </button>

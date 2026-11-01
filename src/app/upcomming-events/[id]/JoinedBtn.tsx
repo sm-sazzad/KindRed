@@ -1,10 +1,10 @@
 "use client";
 import { useSession } from "@/lib/auth-client";
-import { date } from "better-auth";
 import { useEffect, useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { FaBookmark } from "react-icons/fa";
 import toast from "react-hot-toast";
+
 interface Event {
   _id: string;
   title: string;
@@ -97,16 +97,17 @@ const JoinedBtn = ({ event }: { event: Event }) => {
       setIsPending(false);
     }
   };
+
   return (
     <div className="mt-auto pt-8">
       <button
         onClick={handleJoinBtn}
         disabled={isLoading || isPending}
-        className="cursor-pointer inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#d9e9c5] px-5 py-3.5 text-sm font-bold text-[#203228] transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-70"
+        className="cursor-pointer inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#142C45] px-5 py-3.5 text-sm font-bold text-white transition-colors hover:bg-[#1e3d5f] disabled:cursor-not-allowed disabled:opacity-70 dark:bg-[#d9e9c5] dark:text-[#203228] dark:hover:bg-white"
       >
         {isLoading || isPending ? (
           <>
-            <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#203228]/30 border-t-[#203228]" />
+            <span className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white dark:border-[#203228]/30 dark:border-t-[#203228]" />
             {isLoading ? "Loading..." : "Please wait..."}
           </>
         ) : isJoined ? (
