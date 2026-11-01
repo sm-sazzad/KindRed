@@ -8,6 +8,7 @@ import { categories } from "@/components/Category";
 import type { Event } from "@/components/events/types";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { getTokenClient } from "@/lib/AccessTokenClient";
 
 const Btn = ({ event }: { event: Event }) => {
   const [dialog, setDialog] = useState<"edit" | "delete" | null>(null);
@@ -28,7 +29,10 @@ const Btn = ({ event }: { event: Event }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/events/${event._id}`,
         {
           method: "PATCH",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${await getTokenClient()}`,
+          },
           body: JSON.stringify(updatedData),
         },
       );
@@ -66,6 +70,9 @@ const Btn = ({ event }: { event: Event }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/events/${event._id}`,
         {
           method: "DELETE",
+          headers: {
+            authorization: `Bearer ${await getTokenClient()}`,
+          },
         },
       );
 

@@ -1,42 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kindred — Together for Change 🌱
 
-## Getting Started
+Kindred is a community-driven social development and volunteering platform where people can discover community events, join meaningful initiatives, and work together to create positive social change.
 
-First, run the development server:
+The platform connects volunteers with opportunities such as blood donation, environmental protection, food distribution, education, healthcare, and other community-focused activities.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌐 Live Demo
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[Visit Kindred](YOUR_LIVE_DEMO_LINK_HERE)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Technologies Used
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Frontend:** Next.js, React.js, TypeScript
+- **Styling:** Tailwind CSS
+- **Authentication:** Better Auth
+- **Database:** MongoDB
+- **Backend:** Node.js, Express.js
+- **UI & Icons:** React Icons
+- **Notifications:** React Hot Toast
+- **Theme Management:** Next Themes
 
-## API configuration
+## ✨ Key Features
 
-The featured events section loads data from the backend `GET /api/featured`
-endpoint. It uses `http://localhost:5000` by default; set `NEXT_PUBLIC_API_URL`
-to the backend origin when using a different local or deployed API.
+- **User Authentication:** Register and log in using email and password or Google authentication.
+- **Event Discovery:** Explore upcoming community events and volunteering opportunities.
+- **Category Filtering:** Browse events by different social development categories.
+- **Event Details:** View event descriptions, dates, times, locations, and organizer information.
+- **Join Events:** Join community events and participate in meaningful activities.
+- **Leave Events:** Leave an event whenever needed.
+- **Duplicate Join Prevention:** Prevent users from joining the same event multiple times.
+- **Event Management:** Create, update, and manage community events.
+- **User Dashboard:** Manage joined events and personal volunteering activities.
+- **Responsive Design:** Enjoy a consistent experience across desktop, tablet, and mobile devices.
+- **Dark & Light Theme:** Switch between Navy Blue dark mode and clean white light mode.
 
-## Learn More
+## 👨‍💻 Author
 
-To learn more about Next.js, take a look at the following resources:
+**Sheikh Md Sazzad Hossain**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- GitHub: [@sm-sazzad](https://github.com/sm-sazzad)
+- LinkedIn: [Sheikh Md Sazzad Hossain](https://linkedin.com/in/sm-sazzad/)
+- Facebook: [Sazzad Hossain](https://facebook.com/sazzad.hossain.5758/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<p align="center">
+  Made with ❤️ by Sheikh Md Sazzad Hossain
+</p>

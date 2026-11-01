@@ -6,6 +6,7 @@ import { FaArrowRight, FaCalendarDays } from "react-icons/fa6";
 import { categories } from "@/components/Category";
 import { useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
+import { getTokenClient } from "@/lib/AccessTokenClient";
 
 const inputClass =
   "mt-2 w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm text-[#142C45] outline-none transition placeholder:text-gray-400 focus:border-[#142C45]/60 focus:ring-2 focus:ring-[#142C45]/10 dark:border-white/10 dark:bg-[#111b27] dark:text-white dark:placeholder:text-white/30 dark:focus:border-[#d9e9c5]/60 dark:focus:ring-[#d9e9c5]/10";
@@ -55,7 +56,10 @@ export default function CreateEventPage() {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
       const response = await fetch(`${apiUrl}/api/events`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${await getTokenClient()}`,
+        },
         body: JSON.stringify(eventDetails),
       });
 

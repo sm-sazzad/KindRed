@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import { getTokenServer } from "@/lib/TokenAccess";
 import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
@@ -59,34 +60,13 @@ export default async function JoinedEventsPage() {
     headers: await headers(),
   });
 
-  // if (!session?.user?.email) {
-  //   return (
-  //     <main className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-16 text-[#142C45] transition-colors duration-300 dark:bg-[#111b27] dark:text-[#f6f7f2]">
-  //       <div className="mx-auto max-w-2xl rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-xl sm:p-12 dark:border-white/10 dark:bg-[#192736]">
-  //         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#d9e9c5]/30 text-3xl text-[#142C45] dark:bg-[#d9e9c5]/10 dark:text-[#d9e9c5]">
-  //           <FaBookmark />
-  //         </div>
-  //         <h1 className="text-3xl font-extrabold text-[#142C45] sm:text-4xl dark:text-white">Joined Events</h1>
-  //         <p className="mt-3 text-sm text-[#142C45]/60 sm:text-base dark:text-white/55">
-  //           Please sign in to see all the events you have joined.
-  //         </p>
-  //         <Link
-  //           href="/login"
-  //           className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#142C45] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#1e3d5f] dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white"
-  //         >
-  //           Sign In
-  //         </Link>
-  //       </div>
-  //     </main>
-  //   );
-  // }
-
   let joinedEvents: JoinedEvent[] = [];
 
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
     const res = await fetch(`${apiUrl}/api/joined`, {
       cache: "no-store",
+      headers: { authorization: `Bearer ${await getTokenServer()}` },
     });
 
     if (res.ok) {

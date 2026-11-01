@@ -4,10 +4,12 @@ import { useEffect, useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { FaBookmark } from "react-icons/fa";
 import toast from "react-hot-toast";
+import { getTokenClient } from "@/lib/AccessTokenClient";
 
 interface Event {
   _id: string;
   title: string;
+  email?: string;
   category: string;
   description: string;
   eventDate: string;
@@ -29,7 +31,7 @@ const JoinedBtn = ({ event }: { event: Event }) => {
   const [isPending, setIsPending] = useState(false);
   const session = useSession();
   const email = session.data?.user.email;
-  // console.log(event, "event");
+  console.log(event, "event");
   useEffect(() => {
     const checkJoined = async () => {
       setIsLoading(true);
@@ -37,6 +39,7 @@ const JoinedBtn = ({ event }: { event: Event }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/api/joined/${event._id}?email=${email}`,
         {
           cache: "no-store",
+          headers: { authorization: `Bearer ${await getTokenClient()}` },
         },
       );
 
@@ -61,6 +64,7 @@ const JoinedBtn = ({ event }: { event: Event }) => {
           `${process.env.NEXT_PUBLIC_API_URL}/api/joined/${event._id}?email=${encodeURIComponent(email)}`,
           {
             method: "DELETE",
+            headers: { authorization: `Bearer ${await getTokenClient()}` },
           },
         );
 
@@ -74,17 +78,20 @@ const JoinedBtn = ({ event }: { event: Event }) => {
           toast.error("Could not leave the event. Please try again.");
         }
       } else {
-        const { _id, ...eventDetails } = event;
+        const { _id, email: _creatorEmail, ...eventDetails } = event;
 
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/joined`,
           {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${await getTokenClient()}`,
+            },
             body: JSON.stringify({
+              ...eventDetails,
               eventId: _id,
               email,
-              ...eventDetails,
               joinedAt: new Date().toISOString(),
             }),
           },

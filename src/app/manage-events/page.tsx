@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaCalendarDays, FaLocationDot } from "react-icons/fa6";
 import Btn from "./Btn";
+import { getTokenServer } from "@/lib/TokenAccess";
 
 function formatDate(value: string) {
   const date = new Date(value);
@@ -25,33 +26,17 @@ export default async function ManageEventsPage() {
     headers: await headers(),
   });
 
-  if (!session?.user.email) {
-    return (
-      <main className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-16 text-[#142C45] transition-colors duration-300 dark:bg-[#111b27] dark:text-[#f6f7f2]">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-xl dark:border-white/10 dark:bg-[#192736]">
-          <h1 className="text-3xl font-extrabold text-[#142C45] dark:text-white">Your events</h1>
-          <p className="mt-3 text-sm text-[#142C45]/60 dark:text-white/55">
-            Sign in to see the events you created.
-          </p>
-          <Link
-            href="/login"
-            className="mt-6 inline-flex rounded-xl bg-[#142C45] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#1e3d5f] dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white"
-          >
-            Sign in
-          </Link>
-        </div>
-      </main>
-    );
-  }
-
   let events: Event[] = [];
   let errorMessage = "";
 
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
     const response = await fetch(
-      `${apiUrl}/api/events/email/${encodeURIComponent(session.user.email)}`,
-      { cache: "no-store" },
+      `${apiUrl}/api/events/email/${encodeURIComponent(session?.user.email || "")}`,
+      {
+        cache: "no-store",
+        headers: { authorization: `Bearer ${await getTokenServer()}` },
+      },
     );
 
     if (!response.ok) {
@@ -84,7 +69,7 @@ export default async function ManageEventsPage() {
             Your events
           </h1>
           <p className="mt-2 text-sm text-[#142C45]/60 dark:text-white/55">
-            Events created by {session.user.name || session.user.email}.
+            Events created by {session?.user.name || session?.user.email}.
           </p>
         </div>
 
