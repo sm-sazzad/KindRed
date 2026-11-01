@@ -113,7 +113,7 @@ const Category = () => {
             return (
               <Link
                 key={category.id}
-                href={`/upcomming-events?category=${category.id}`}
+                href={`/upcomming-events`}
                 className="group relative flex min-h-[204px] flex-col overflow-hidden rounded-2xl border border-white/[0.09] bg-white/[0.035] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#d9e9c5]/30 hover:bg-white/[0.065] hover:shadow-[0_20px_50px_-25px_rgba(0,0,0,0.8)] focus-visible:ring-2 focus-visible:ring-[#d9e9c5] focus-visible:outline-none sm:min-h-[216px] sm:p-6"
               >
                 <span

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FaArrowRight, FaCalendarDays } from "react-icons/fa6";
 import { categories } from "@/components/Category";
 import { useSession } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 const inputClass =
   "mt-2 w-full rounded-xl border border-white/10 bg-[#111b27] px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/30 focus:border-[#d9e9c5]/60 focus:ring-2 focus:ring-[#d9e9c5]/10";
@@ -27,6 +28,7 @@ export default function CreateEventPage() {
 
     if (!category) {
       setErrorMessage("Please select a category.");
+      toast.error("Please select a category.");
       setIsSubmitting(false);
       return;
     }
@@ -61,13 +63,15 @@ export default function CreateEventPage() {
         throw new Error("Could not create the event. Please try again.");
       }
 
+      toast.success("Event created successfully!");
       router.push("/upcomming-events");
     } catch (error) {
-      setErrorMessage(
+      const msg =
         error instanceof Error
           ? error.message
-          : "Something went wrong. Please try again.",
-      );
+          : "Something went wrong. Please try again.";
+      setErrorMessage(msg);
+      toast.error(msg);
     } finally {
       setIsSubmitting(false);
     }

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { connection } from "next/server";
 import {
   FaArrowRight,
   FaCalendarDays,
@@ -34,12 +33,12 @@ const artworkGradients = [
   "from-[#c7b9d8] via-[#8e8da8] to-[#344358]",
   "from-[#d4dfc4] via-[#8da49b] to-[#344b5c]",
   "from-[#c9d4e4] via-[#8598aa] to-[#354c62]",
-] as const;
+];
 
 function formatDate(value: string) {
   const date = new Date(value);
 
-  if (Number.isNaN(date.getTime())) {
+  if (isNaN(date.getTime())) {
     return "Date to be announced";
   }
 
@@ -61,14 +60,11 @@ function EventArtwork({
   sizes: string;
   priority?: boolean;
 }) {
-  const hasImage =
-    typeof event.imageUrl === "string" && event.imageUrl.trim().length > 0;
-
   return (
     <div
       className={`absolute inset-0 overflow-hidden bg-gradient-to-br ${artworkGradients[index % artworkGradients.length]}`}
     >
-      {hasImage ? (
+      {event.imageUrl ? (
         <Image
           src={event.imageUrl}
           alt=""
@@ -79,15 +75,13 @@ function EventArtwork({
           className="object-cover transition-transform duration-700 group-hover:scale-105"
         />
       ) : (
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 flex items-center justify-center"
-        >
+        <div className="absolute inset-0 flex items-center justify-center">
           <span className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-xl font-bold text-white/85 backdrop-blur-sm">
             {event.title}
           </span>
         </div>
       )}
+
       <div className="absolute inset-0 bg-gradient-to-b from-[#101a25]/10 via-transparent to-[#101a25]/75" />
     </div>
   );
@@ -110,20 +104,19 @@ function EventMeta({
       }`}
     >
       <span className="inline-flex items-center gap-1.5">
-        <FaLocationDot aria-hidden="true" className="shrink-0 text-[#d9e9c5]" />
+        <FaLocationDot className="shrink-0 text-[#d9e9c5]" />
         <span className="line-clamp-1">
           {location || "Location to be announced"}
         </span>
       </span>
+
       <span className="inline-flex items-center gap-1.5">
-        <FaCalendarDays
-          aria-hidden="true"
-          className="shrink-0 text-[#d9e9c5]"
-        />
+        <FaCalendarDays className="shrink-0 text-[#d9e9c5]" />
         {date}
       </span>
+
       <span className="inline-flex items-center gap-1.5">
-        <FaUsers aria-hidden="true" className="shrink-0 text-[#d9e9c5]" />
+        <FaUsers className="shrink-0 text-[#d9e9c5]" />
         {Number(event.joinedVolunteers || 0).toLocaleString("en-BD")} joined
       </span>
     </div>
@@ -139,34 +132,42 @@ function FeaturedEventCard({ event, index }: { event: Event; index: number }) {
         priority
         sizes="(max-width: 1024px) 90vw, 55vw"
       />
+
       <div className="absolute inset-x-0 top-0 flex items-start justify-between gap-3 p-5 sm:p-6">
         <span className="rounded-full border border-white/20 bg-[#d9e9c5] px-3 py-1.5 text-[10px] font-bold tracking-wide text-[#263a32] shadow-sm">
           {event.category}
         </span>
+
         <span className="rounded-full border border-white/20 bg-[#111b27]/35 px-3 py-1.5 text-[10px] font-semibold text-white/90 backdrop-blur-md">
           Featured event
         </span>
       </div>
+
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
         <p className="mb-2 text-[10px] font-bold tracking-[0.17em] text-[#d9e9c5] uppercase">
           {event.city || "Community event"}
         </p>
+
         <h3 className="max-w-xl text-2xl leading-tight font-bold tracking-tight text-white sm:text-3xl">
           {event.title}
         </h3>
+
         {event.description && (
           <p className="mt-2 line-clamp-2 max-w-xl text-sm leading-6 text-white/70">
             {event.description}
           </p>
         )}
+
         <div className="mt-4">
           <EventMeta event={event} prominent />
         </div>
+
         <Link
           href={`/upcomming-events/${event._id}`}
           className="mt-5 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-xs font-bold text-[#172737] transition-colors hover:bg-[#d9e9c5]"
         >
-          View event <FaArrowRight aria-hidden="true" className="text-[10px]" />
+          View event
+          <FaArrowRight className="text-[10px]" />
         </Link>
       </div>
     </article>
@@ -183,13 +184,16 @@ function SideEventCard({ event, index }: { event: Event; index: number }) {
           sizes="(max-width: 640px) 30vw, 160px"
         />
       </div>
+
       <div className="flex min-w-0 flex-1 flex-col items-start py-1 pl-4">
         <span className="max-w-full truncate rounded-full bg-[#d9e9c5] px-2.5 py-1 text-[9px] font-bold text-[#263a32]">
           {event.category}
         </span>
+
         <h3 className="mt-2 line-clamp-2 text-sm leading-5 font-bold text-white sm:text-base">
           {event.title}
         </h3>
+
         <p className="mt-1 line-clamp-1 text-[10px] text-white/50">
           {[
             event.city,
@@ -199,12 +203,13 @@ function SideEventCard({ event, index }: { event: Event; index: number }) {
             .filter(Boolean)
             .join(" · ")}
         </p>
+
         <Link
           href={`/upcomming-events/${event._id}`}
           className="mt-auto inline-flex items-center gap-1 pt-2 text-[11px] font-bold text-[#d9e9c5] underline decoration-white/30 underline-offset-4 transition-colors hover:text-white"
         >
-          View details{" "}
-          <FaArrowRight aria-hidden="true" className="text-[9px]" />
+          View details
+          <FaArrowRight className="text-[9px]" />
         </Link>
       </div>
     </article>
@@ -220,29 +225,34 @@ function SmallEventCard({ event, index }: { event: Event; index: number }) {
           index={index}
           sizes="(max-width: 768px) 90vw, 30vw"
         />
+
         <span className="absolute top-3 left-3 rounded-full border border-white/20 bg-[#111b27]/45 px-2.5 py-1 text-[9px] font-semibold text-white backdrop-blur-md">
           {event.category}
         </span>
       </div>
+
       <div className="p-4">
         <div className="flex items-center justify-between gap-3 text-[10px] text-white/50">
           <span className="truncate">{event.city || event.location}</span>
           <span className="shrink-0">{formatDate(event.eventDate)}</span>
         </div>
+
         <h3 className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 font-bold text-white">
           {event.title}
         </h3>
+
         <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
           <span className="inline-flex items-center gap-1.5 text-[10px] text-white/55">
-            <FaUsers aria-hidden="true" className="text-[#d9e9c5]" />
+            <FaUsers className="text-[#d9e9c5]" />
             {Number(event.joinedVolunteers || 0).toLocaleString("en-BD")} joined
           </span>
+
           <Link
             href={`/upcomming-events/${event._id}`}
             aria-label={`View ${event.title}`}
             className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-[#d9e9c5] transition-colors hover:bg-[#d9e9c5] hover:text-[#172737]"
           >
-            <FaArrowRight aria-hidden="true" className="text-xs" />
+            <FaArrowRight className="text-xs" />
           </Link>
         </div>
       </div>
@@ -251,58 +261,26 @@ function SmallEventCard({ event, index }: { event: Event; index: number }) {
 }
 
 const FeaturedPosts = async () => {
-  await connection();
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000"}/api/featured`,
+    { cache: "no-store" },
+  );
 
-  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5000";
+  const allEvents: Event[] = await response.json();
 
-  let events: Event[];
-  try {
-    if (!apiBaseUrl) {
-      throw new Error("NEXT_PUBLIC_API_URL is not configured.");
-    }
+  const now = new Date();
+  const today = [
+    now.getFullYear(),
+    String(now.getMonth() + 1).padStart(2, "0"),
+    String(now.getDate()).padStart(2, "0"),
+  ].join("-");
 
-    const response = await fetch(
-      `${apiBaseUrl.replace(/\/+$/, "")}/api/featured`,
-      { cache: "no-store" },
-    );
-
-    if (!response.ok) {
-      throw new Error(`Featured events API returned HTTP ${response.status}.`);
-    }
-
-    const responseData: unknown = await response.json();
-    if (!Array.isArray(responseData)) {
-      throw new Error("Featured events API did not return an array.");
-    }
-    events = responseData as Event[];
-  } catch (error) {
-    if (!(error instanceof Error)) {
-      throw error;
-    }
-
-    console.error("Unable to load featured events:", error);
-
-    return (
-      <section className="bg-[#111b27] px-[5%] py-16 text-[#f6f7f2] sm:py-20">
-        <div className="mx-auto max-w-7xl border-t border-white/10 pt-10">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Find Your Next
-            <br />
-            Way to Give Back.
-          </h2>
-          <p
-            role="status"
-            className="mt-6 rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-4 text-sm text-white/65"
-          >
-            We couldn&apos;t load events right now. Please try again in a little
-            while.
-          </p>
-        </div>
-      </section>
-    );
-  }
+  const events = allEvents.filter((event) => {
+    return event.eventDate >= today;
+  });
 
   const [featuredEvent, ...remainingEvents] = events;
+
   const sideEvents = remainingEvents.slice(0, 2);
   const bottomEvents = remainingEvents.slice(2, 5);
 
@@ -315,26 +293,25 @@ const FeaturedPosts = async () => {
               <span className="h-px w-6 bg-[#d9e9c5]" />
               Make a difference
             </p>
+
             <h2 className="text-3xl leading-[1.02] font-extrabold tracking-[-0.045em] sm:text-4xl md:text-5xl">
               Find Your Next
               <br />
               Way to Give Back.
             </h2>
           </div>
+
           <Link
             href="/upcomming-events"
             className="mb-1 inline-flex shrink-0 items-center gap-2 border-b border-white/40 pb-1 text-xs font-semibold text-white/75 transition-colors hover:border-[#d9e9c5] hover:text-[#d9e9c5]"
           >
-            View all events{" "}
-            <FaArrowRight aria-hidden="true" className="text-[10px]" />
+            View all events
+            <FaArrowRight className="text-[10px]" />
           </Link>
         </div>
 
         {events.length === 0 ? (
-          <div
-            role="status"
-            className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-10 text-center text-sm text-white/60"
-          >
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] px-5 py-10 text-center text-sm text-white/60">
             No events are available right now. Check back soon to find a way to
             give back.
           </div>
@@ -344,6 +321,7 @@ const FeaturedPosts = async () => {
               {featuredEvent && (
                 <FeaturedEventCard event={featuredEvent} index={0} />
               )}
+
               {sideEvents.length > 0 && (
                 <div className="grid h-full min-h-0 grid-rows-2 gap-3 sm:gap-4">
                   {sideEvents.map((event, index) => (

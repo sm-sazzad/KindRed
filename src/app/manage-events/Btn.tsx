@@ -7,6 +7,7 @@ import { FaPenToSquare } from "react-icons/fa6";
 import { categories } from "@/components/Category";
 import type { Event } from "@/components/events/types";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const Btn = ({ event }: { event: Event }) => {
   const [dialog, setDialog] = useState<"edit" | "delete" | null>(null);
@@ -38,15 +39,19 @@ const Btn = ({ event }: { event: Event }) => {
 
       const resData = await res.json();
       if (resData.modifiedCount > 0) {
+        toast.success("Event updated successfully!");
         router.refresh();
         setDialog(null);
       } else {
-        setErrorMessage("No changes were saved. Please try again.");
+        const msg = "No changes were saved. Please try again.";
+        setErrorMessage(msg);
+        toast.error(msg);
       }
     } catch (error) {
-      setErrorMessage(
-        error instanceof Error ? error.message : "Could not update the event.",
-      );
+      const msg =
+        error instanceof Error ? error.message : "Could not update the event.";
+      setErrorMessage(msg);
+      toast.error(msg);
     } finally {
       setIsPending(false);
     }
@@ -70,15 +75,19 @@ const Btn = ({ event }: { event: Event }) => {
 
       const resData = await res.json();
       if (resData.deletedCount > 0) {
+        toast.success("Event deleted successfully!");
         router.refresh();
         setDialog(null);
       } else {
-        setErrorMessage("The event was not deleted. Please try again.");
+        const msg = "The event was not deleted. Please try again.";
+        setErrorMessage(msg);
+        toast.error(msg);
       }
     } catch (error) {
-      setErrorMessage(
-        error instanceof Error ? error.message : "Could not delete the event.",
-      );
+      const msg =
+        error instanceof Error ? error.message : "Could not delete the event.";
+      setErrorMessage(msg);
+      toast.error(msg);
     } finally {
       setIsPending(false);
     }

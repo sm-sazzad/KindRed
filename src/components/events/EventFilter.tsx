@@ -23,7 +23,7 @@ const EventFilter = ({ events }: EventFilterProps) => {
       <div className="mb-8 flex flex-wrap gap-2">
         <button
           onClick={() => setSelectedCategory("all")}
-          className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[#d9e9c5] focus-visible:outline-none ${
+          className={`rounded-full cursor-pointer border px-4 py-2 text-xs font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[#d9e9c5] focus-visible:outline-none ${
             selectedCategory === "all"
               ? "border-[#d9e9c5]/30 bg-[#d9e9c5] text-[#203228]"
               : "border-white/10 bg-white/[0.04] text-white/60 hover:border-white/25 hover:text-white"
@@ -36,7 +36,7 @@ const EventFilter = ({ events }: EventFilterProps) => {
           <button
             key={category.id}
             onClick={() => setSelectedCategory(category.id)}
-            className={`rounded-full border px-4 py-2 text-xs font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[#d9e9c5] focus-visible:outline-none ${
+            className={`rounded-full cursor-pointer border px-4 py-2 text-xs font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[#d9e9c5] focus-visible:outline-none ${
               selectedCategory === category.id
                 ? "border-[#d9e9c5]/30 bg-[#d9e9c5] text-[#203228]"
                 : "border-white/10 bg-white/[0.04] text-white/60 hover:border-white/25 hover:text-white"
@@ -56,9 +56,7 @@ const EventFilter = ({ events }: EventFilterProps) => {
         </div>
       ) : (
         <div className="py-16 text-center">
-          <p className="text-lg font-semibold text-white">
-            No events found
-          </p>
+          <p className="text-lg font-semibold text-white">No events found</p>
           <p className="mt-2 text-sm text-white/50">
             No events available in this category.
           </p>

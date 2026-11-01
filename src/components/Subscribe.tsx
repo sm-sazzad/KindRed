@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa6";
 import { categories } from "./Category";
 import CompletedEvent from "./CompletedEvent";
+import toast from "react-hot-toast";
 
 const impactHighlights = [
   {
@@ -42,6 +43,7 @@ function NewsletterForm() {
     setMessage(
       "Newsletter sign-ups are not connected yet. Please check back soon.",
     );
+    toast.success("Newsletter sign-ups are not connected yet. Please check back soon.");
   }
 
   return (

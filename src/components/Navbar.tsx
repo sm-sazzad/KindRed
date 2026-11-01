@@ -4,7 +4,8 @@ import { authClient, useSession } from "@/lib/auth-client";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 import { FaHandHoldingHeart } from "react-icons/fa";
 import {
   FaArrowRightFromBracket,
@@ -15,12 +16,22 @@ import {
 } from "react-icons/fa6";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { RxCross2 } from "react-icons/rx";
+import toast from "react-hot-toast";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
   const session = useSession();
+  const { theme, resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = !mounted || (resolvedTheme || theme) === "dark";
 
   const handleToggleMenu = () => {
     setIsOpen(true);
@@ -28,7 +39,13 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#142C45]">
+      <header
+        className={`sticky top-0 z-50 border-b transition-colors duration-300 ${
+          isDark
+            ? "border-white/10 bg-[#142C45] text-white"
+            : "border-gray-200 bg-white text-[#142C45] shadow-sm"
+        }`}
+      >
         <nav className="mx-auto flex w-[90%] max-w-7xl items-center justify-between py-4">
           {/* Logo */}
           <Link href="/" className="group flex items-center gap-3">
@@ -37,10 +54,21 @@ const Navbar = () => {
             </div>
 
             <div>
-              <h1 className="text-2xl font-extrabold tracking-tight text-white">
-                Kindred<span className="text-[#D9E9C5]">.</span>
+              <h1
+                className={`text-2xl font-extrabold tracking-tight transition-colors ${
+                  isDark ? "text-white" : "text-[#142C45]"
+                }`}
+              >
+                Kindred
+                <span className={isDark ? "text-[#D9E9C5]" : "text-[#8CA875]"}>
+                  .
+                </span>
               </h1>
-              <p className="text-[9px] font-medium uppercase tracking-[2.5px] text-white/55">
+              <p
+                className={`text-[9px] font-medium uppercase tracking-[2.5px] transition-colors ${
+                  isDark ? "text-white/55" : "text-[#142C45]/60"
+                }`}
+              >
                 Together for change
               </p>
             </div>
@@ -50,14 +78,30 @@ const Navbar = () => {
           <div className="hidden items-center gap-9 md:flex">
             <Link
               href="/"
-              className="text-sm font-medium text-[#D9E9C5] transition-colors hover:text-[#D9E9C5]"
+              className={`text-sm font-semibold transition-colors ${
+                pathname === "/"
+                  ? isDark
+                    ? "text-[#D9E9C5]"
+                    : "text-[#142C45] font-bold"
+                  : isDark
+                    ? "text-white/70 hover:text-white"
+                    : "text-[#142C45]/70 hover:text-[#142C45]"
+              }`}
             >
               Home
             </Link>
 
             <Link
               href="/upcomming-events"
-              className="text-sm font-medium text-[#D9E9C5] transition-colors hover:text-white"
+              className={`text-sm font-semibold transition-colors ${
+                pathname.startsWith("/upcomming-events")
+                  ? isDark
+                    ? "text-[#D9E9C5]"
+                    : "text-[#142C45] font-bold"
+                  : isDark
+                    ? "text-white/70 hover:text-white"
+                    : "text-[#142C45]/70 hover:text-[#142C45]"
+              }`}
             >
               Upcoming Events
             </Link>
@@ -65,6 +109,8 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-4">
+            <ThemeToggle />
+
             {session.data?.user ? (
               <div className="relative">
                 <button
@@ -73,7 +119,9 @@ const Navbar = () => {
                   aria-label="Toggle profile menu"
                   aria-expanded={isProfileOpen}
                   aria-haspopup="menu"
-                  className="flex cursor-pointer items-center gap-2 rounded-full p-1.5 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9E9C5]"
+                  className={`flex cursor-pointer items-center gap-2 rounded-full p-1.5 transition ${
+                    isDark ? "hover:bg-white/10" : "hover:bg-gray-100"
+                  } focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#D9E9C5]`}
                 >
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-[#D9E9C5] bg-[#D9E9C5] text-sm font-bold text-[#142C45]">
                     {session.data.user.image ? (
@@ -90,22 +138,34 @@ const Navbar = () => {
                   </span>
                   <FaChevronDown
                     aria-hidden="true"
-                    className={`text-xs text-[#D9E9C5] transition-transform duration-200 ${
-                      isProfileOpen ? "rotate-180" : ""
-                    }`}
+                    className={`text-xs transition-transform duration-200 ${
+                      isDark ? "text-[#D9E9C5]" : "text-[#142C45]"
+                    } ${isProfileOpen ? "rotate-180" : ""}`}
                   />
                 </button>
 
                 {isProfileOpen && (
                   <div
                     role="menu"
-                    className="absolute right-0 top-full z-[70] mt-3 w-72 overflow-hidden rounded-2xl border border-white/10 bg-[#101b2c] text-white shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
+                    className={`absolute right-0 top-full z-[70] mt-3 w-72 overflow-hidden rounded-2xl border ${
+                      isDark
+                        ? "border-white/10 bg-[#101b2c] text-white shadow-[0_16px_40px_rgba(0,0,0,0.35)]"
+                        : "border-gray-200 bg-white text-[#142C45] shadow-[0_16px_40px_rgba(0,0,0,0.12)]"
+                    }`}
                   >
-                    <div className="border-b border-white/10 px-5 py-4">
+                    <div
+                      className={`border-b px-5 py-4 ${
+                        isDark ? "border-white/10" : "border-gray-100"
+                      }`}
+                    >
                       <p className="truncate font-bold">
                         {session.data.user.name || "Kindred member"}
                       </p>
-                      <p className="mt-1 truncate text-sm text-slate-400">
+                      <p
+                        className={`mt-1 truncate text-sm ${
+                          isDark ? "text-slate-400" : "text-gray-500"
+                        }`}
+                      >
                         {session.data.user.email}
                       </p>
                     </div>
@@ -115,40 +175,67 @@ const Navbar = () => {
                         href="/create-event"
                         role="menuitem"
                         onClick={() => setIsProfileOpen(false)}
-                        className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.07] hover:text-[#D9E9C5]"
+                        className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${
+                          isDark
+                            ? "text-slate-200 hover:bg-white/[0.07] hover:text-[#D9E9C5]"
+                            : "text-gray-700 hover:bg-gray-100 hover:text-[#142C45]"
+                        }`}
                       >
-                        <FaCirclePlus className="text-[#42d4bd]" />
+                        <FaCirclePlus className="text-[#0d9488] dark:text-[#42d4bd]" />
                         Create Event
                       </Link>
                       <Link
                         href="/manage-events"
                         role="menuitem"
                         onClick={() => setIsProfileOpen(false)}
-                        className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.07] hover:text-[#D9E9C5]"
+                        className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${
+                          isDark
+                            ? "text-slate-200 hover:bg-white/[0.07] hover:text-[#D9E9C5]"
+                            : "text-gray-700 hover:bg-gray-100 hover:text-[#142C45]"
+                        }`}
                       >
-                        <FaGear className="text-[#8b83ff]" />
+                        <FaGear className="text-[#6366f1] dark:text-[#8b83ff]" />
                         Manage Events
                       </Link>
                       <Link
                         href="/joined-events"
                         role="menuitem"
                         onClick={() => setIsProfileOpen(false)}
-                        className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/[0.07] hover:text-[#D9E9C5]"
+                        className={`flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${
+                          isDark
+                            ? "text-slate-200 hover:bg-white/[0.07] hover:text-[#D9E9C5]"
+                            : "text-gray-700 hover:bg-gray-100 hover:text-[#142C45]"
+                        }`}
                       >
-                        <FaCircleCheck className="text-[#00c99a]" />
+                        <FaCircleCheck className="text-[#059669] dark:text-[#00c99a]" />
                         Joined Events
                       </Link>
                     </div>
 
-                    <div className="border-t border-white/10 p-2">
+                    <div
+                      className={`border-t p-2 ${
+                        isDark ? "border-white/10" : "border-gray-100"
+                      }`}
+                    >
                       <button
                         type="button"
                         role="menuitem"
                         onClick={async () => {
-                          await authClient.signOut();
-                          setIsProfileOpen(false);
+                          try {
+                            await authClient.signOut();
+                            setIsProfileOpen(false);
+                            toast.success("Signed out successfully!");
+                          } catch {
+                            toast.error(
+                              "Failed to sign out. Please try again.",
+                            );
+                          }
                         }}
-                        className="flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-[#ff7777] transition hover:bg-red-400/10"
+                        className={`flex w-full cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${
+                          isDark
+                            ? "text-[#ff7777] hover:bg-red-400/10"
+                            : "text-red-600 hover:bg-red-50"
+                        }`}
                       >
                         <FaArrowRightFromBracket />
                         Sign out
@@ -161,14 +248,18 @@ const Navbar = () => {
               <>
                 <Link
                   href="/login"
-                  className="text-sm font-semibold text-white transition-colors hover:text-[#D9E9C5]"
+                  className={`text-sm font-semibold transition-colors ${
+                    isDark
+                      ? "text-white hover:text-[#D9E9C5]"
+                      : "text-[#142C45] hover:text-[#285789]"
+                  }`}
                 >
                   Login
                 </Link>
 
                 <Link
                   href="/sign-up"
-                  className="hidden items-center gap-2 rounded-full bg-[#D9E9C5] px-5 py-2.5 text-sm font-bold text-[#142C45] transition-all duration-300 hover:bg-white sm:flex"
+                  className="hidden items-center gap-2 rounded-full bg-[#D9E9C5] px-5 py-2.5 text-sm font-bold text-[#142C45] transition-all duration-300 hover:bg-[#cbe0b3] dark:hover:bg-white sm:flex"
                 >
                   Join Us
                 </Link>
@@ -179,14 +270,17 @@ const Navbar = () => {
             <button
               onClick={handleToggleMenu}
               aria-label="Open navigation menu"
-              className="text-2xl text-white md:hidden cursor-pointer"
+              className={`cursor-pointer text-2xl md:hidden ${
+                isDark ? "text-white" : "text-[#142C45]"
+              }`}
             >
               <HiOutlineMenuAlt3 />
             </button>
           </div>
         </nav>
       </header>
-      {/* sidebar */}
+
+      {/* sidebar for mobile */}
       <div
         className={`fixed inset-0 z-[60] bg-[#0B1722]/50 backdrop-blur-sm transition-all duration-300 md:hidden ${
           isOpen ? "visible opacity-100" : "invisible opacity-0"
@@ -206,7 +300,7 @@ const Navbar = () => {
 
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-full cursor-pointer bg-[#142C45]/5 p-2 text-[#142C45] transition hover:bg-[#142C45] hover:text-white"
+              className="cursor-pointer rounded-full bg-[#142C45]/5 p-2 text-[#142C45] transition hover:bg-[#142C45] hover:text-white"
             >
               <RxCross2 className="text-xl" />
             </button>
@@ -230,7 +324,7 @@ const Navbar = () => {
                 className={`flex items-center justify-between rounded-xl px-4 py-3.5 transition-all duration-200 ${
                   isActive
                     ? "bg-[#142C45] text-[#D9E9C5] shadow-md"
-                    : "text-[#142C45]/70 hover:bg-[#D9E9C5]/60 hov-[#142C45]"
+                    : "text-[#142C45]/70 hover:bg-[#D9E9C5]/60 hover:text-[#142C45]"
                 }`}
               >
                 {item.name}
