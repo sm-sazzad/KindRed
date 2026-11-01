@@ -4,7 +4,6 @@ import {
   FaArrowRight,
   FaCalendarDays,
   FaLocationDot,
-  FaUsers,
 } from "react-icons/fa6";
 
 export interface Event {
@@ -114,11 +113,6 @@ function EventMeta({
         <FaCalendarDays className="shrink-0 text-[#d9e9c5]" />
         {date}
       </span>
-
-      <span className="inline-flex items-center gap-1.5">
-        <FaUsers className="shrink-0 text-[#d9e9c5]" />
-        {Number(event.joinedVolunteers || 0).toLocaleString("en-BD")} joined
-      </span>
     </div>
   );
 }
@@ -195,13 +189,7 @@ function SideEventCard({ event, index }: { event: Event; index: number }) {
         </h3>
 
         <p className="mt-1 line-clamp-1 text-[10px] text-[#142C45]/60 dark:text-white/50">
-          {[
-            event.city,
-            Number(event.joinedVolunteers || 0).toLocaleString("en-BD") +
-              " volunteers",
-          ]
-            .filter(Boolean)
-            .join(" · ")}
+          {event.city || event.location || "Community event"}
         </p>
 
         <Link
@@ -242,9 +230,8 @@ function SmallEventCard({ event, index }: { event: Event; index: number }) {
         </h3>
 
         <div className="mt-3 flex items-center justify-between border-t border-gray-200 pt-3 dark:border-white/10">
-          <span className="inline-flex items-center gap-1.5 text-[10px] text-[#142C45]/70 dark:text-white/55">
-            <FaUsers className="text-[#5d8338] dark:text-[#d9e9c5]" />
-            {Number(event.joinedVolunteers || 0).toLocaleString("en-BD")} joined
+          <span className="text-[10px] text-[#142C45]/60 dark:text-white/50">
+            {event.category}
           </span>
 
           <Link

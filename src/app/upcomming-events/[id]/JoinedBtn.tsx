@@ -29,7 +29,7 @@ const JoinedBtn = ({ event }: { event: Event }) => {
   const [isPending, setIsPending] = useState(false);
   const session = useSession();
   const email = session.data?.user.email;
-
+  // console.log(event, "event");
   useEffect(() => {
     const checkJoined = async () => {
       setIsLoading(true);
@@ -58,7 +58,7 @@ const JoinedBtn = ({ event }: { event: Event }) => {
     try {
       if (isJoined) {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/joined/${event._id}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/joined/${event._id}?email=${encodeURIComponent(email)}`,
           {
             method: "DELETE",
           },
@@ -74,15 +74,21 @@ const JoinedBtn = ({ event }: { event: Event }) => {
           toast.error("Could not leave the event. Please try again.");
         }
       } else {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/joined`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            ...event,
-            joinedAt: new Date().toISOString(),
-          }),
-        });
+        const { _id, ...eventDetails } = event;
+
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/joined`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              eventId: _id,
+              email,
+              ...eventDetails,
+              joinedAt: new Date().toISOString(),
+            }),
+          },
+        );
         const resData = await res.json();
         if (res.ok && resData.insertedId && resData.acknowledged) {
           setIsJoined(true);

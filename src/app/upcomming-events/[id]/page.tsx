@@ -8,7 +8,6 @@ import {
   FaClock,
   FaLocationDot,
   FaUser,
-  FaUsers,
 } from "react-icons/fa6";
 import JoinedBtn from "./JoinedBtn";
 
@@ -82,13 +81,6 @@ const EventDetailsPage = async ({
   }
 
   const location = [event.location, event.city].filter(Boolean).join(", ");
-
-  const joined = event.joinedVolunteers || 0;
-  const capacity = event.volunteerCapacity || 0;
-
-  const volunteerProgress = capacity
-    ? Math.min((joined / capacity) * 100, 100)
-    : 0;
 
   return (
     <div className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-10 text-[#142C45] transition-colors duration-300 sm:py-14 lg:py-20 dark:bg-[#111b27] dark:text-[#f6f7f2]">
@@ -166,30 +158,7 @@ const EventDetailsPage = async ({
                 <FaUser className="w-4 shrink-0 text-[#5d8338] dark:text-[#d9e9c5]" />
                 Organized by {event.organizer}
               </p>
-
-              <p className="flex items-center gap-3 text-sm text-[#142C45]/80 dark:text-white/75">
-                <FaUsers className="w-4 shrink-0 text-[#5d8338] dark:text-[#d9e9c5]" />
-                {joined} volunteers joined
-                {capacity ? ` · ${capacity} spots` : ""}
-              </p>
             </div>
-
-            {/* Volunteer Progress */}
-            {capacity > 0 && (
-              <div className="mt-6">
-                <div className="mb-2 flex justify-between text-xs text-[#142C45]/60 dark:text-white/50">
-                  <span>Volunteer spots filled</span>
-                  <span>{Math.round(volunteerProgress)}%</span>
-                </div>
-
-                <div className="h-2 overflow-hidden rounded-full bg-gray-200 dark:bg-white/10">
-                  <div
-                    className="h-full rounded-full bg-[#5d8338] dark:bg-[#d9e9c5]"
-                    style={{ width: `${volunteerProgress}%` }}
-                  />
-                </div>
-              </div>
-            )}
 
             {/* Join Button */}
             <JoinedBtn event={event} />

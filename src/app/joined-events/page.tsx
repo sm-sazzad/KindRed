@@ -14,6 +14,7 @@ import {
 
 interface JoinedEvent {
   _id: string;
+  eventId?: string;
   email?: string;
   title: string;
   category?: string;
@@ -58,27 +59,27 @@ export default async function JoinedEventsPage() {
     headers: await headers(),
   });
 
-  if (!session?.user?.email) {
-    return (
-      <main className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-16 text-[#142C45] transition-colors duration-300 dark:bg-[#111b27] dark:text-[#f6f7f2]">
-        <div className="mx-auto max-w-2xl rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-xl sm:p-12 dark:border-white/10 dark:bg-[#192736]">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#d9e9c5]/30 text-3xl text-[#142C45] dark:bg-[#d9e9c5]/10 dark:text-[#d9e9c5]">
-            <FaBookmark />
-          </div>
-          <h1 className="text-3xl font-extrabold text-[#142C45] sm:text-4xl dark:text-white">Joined Events</h1>
-          <p className="mt-3 text-sm text-[#142C45]/60 sm:text-base dark:text-white/55">
-            Please sign in to see all the events you have joined.
-          </p>
-          <Link
-            href="/login"
-            className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#142C45] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#1e3d5f] dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white"
-          >
-            Sign In
-          </Link>
-        </div>
-      </main>
-    );
-  }
+  // if (!session?.user?.email) {
+  //   return (
+  //     <main className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-16 text-[#142C45] transition-colors duration-300 dark:bg-[#111b27] dark:text-[#f6f7f2]">
+  //       <div className="mx-auto max-w-2xl rounded-3xl border border-gray-200 bg-white p-8 text-center shadow-xl sm:p-12 dark:border-white/10 dark:bg-[#192736]">
+  //         <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#d9e9c5]/30 text-3xl text-[#142C45] dark:bg-[#d9e9c5]/10 dark:text-[#d9e9c5]">
+  //           <FaBookmark />
+  //         </div>
+  //         <h1 className="text-3xl font-extrabold text-[#142C45] sm:text-4xl dark:text-white">Joined Events</h1>
+  //         <p className="mt-3 text-sm text-[#142C45]/60 sm:text-base dark:text-white/55">
+  //           Please sign in to see all the events you have joined.
+  //         </p>
+  //         <Link
+  //           href="/login"
+  //           className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#142C45] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#1e3d5f] dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white"
+  //         >
+  //           Sign In
+  //         </Link>
+  //       </div>
+  //     </main>
+  //   );
+  // }
 
   let joinedEvents: JoinedEvent[] = [];
 
@@ -92,7 +93,7 @@ export default async function JoinedEventsPage() {
       const data: JoinedEvent[] = await res.json();
       if (Array.isArray(data)) {
         joinedEvents = data.filter(
-          (event) => event.email === session.user.email,
+          (event) => event.email === session?.user.email,
         );
       }
     }
@@ -274,7 +275,7 @@ export default async function JoinedEventsPage() {
                       )}
 
                       <Link
-                        href={`/upcomming-events/${event._id}`}
+                        href={`/upcomming-events/${event.eventId || event._id}`}
                         className="group/button inline-flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-3 text-xs font-bold text-[#142C45] transition-all duration-300 hover:bg-[#142C45] hover:text-white focus-visible:outline-none dark:border-white/10 dark:bg-white/[0.045] dark:text-white dark:hover:border-[#d9e9c5]/30 dark:hover:bg-[#d9e9c5] dark:hover:text-[#203228]"
                       >
                         View Details

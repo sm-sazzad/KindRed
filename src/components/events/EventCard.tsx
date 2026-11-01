@@ -6,7 +6,6 @@ import {
   FaCheck,
   FaClock,
   FaLocationDot,
-  FaUsers,
 } from "react-icons/fa6";
 import type { Event } from "./types";
 
@@ -55,11 +54,6 @@ export default function EventCard({
   event: Event;
   index: number;
 }) {
-  const joined = event.joinedVolunteers || 0;
-  const capacity = event.volunteerCapacity || 0;
-  const volunteerProgress = capacity
-    ? Math.min((joined / capacity) * 100, 100)
-    : 0;
   const imageUrl =
     typeof event.imageUrl === "string" ? event.imageUrl.trim() : "";
 
@@ -129,45 +123,16 @@ export default function EventCard({
           </span>
         </div>
 
-        <div className="mt-4 border-t border-gray-200 pt-4 dark:border-white/10">
-          <div className="flex items-center justify-between gap-3 text-xs">
-            <span className="inline-flex items-center gap-2 text-[#142C45]/80 dark:text-white/65">
-              <FaUsers aria-hidden="true" className="text-[#5d8338] dark:text-[#d9e9c5]" />
-              {joined.toLocaleString("en-BD")} joined
-            </span>
-            {capacity > 0 && (
-              <span className="text-[10px] text-[#142C45]/50 dark:text-white/40">
-                {joined.toLocaleString("en-BD")} /{" "}
-                {capacity.toLocaleString("en-BD")} volunteers
-              </span>
-            )}
-          </div>
-          {capacity > 0 && (
-            <div
-              role="progressbar"
-              aria-label="Volunteer capacity"
-              aria-valuenow={Math.round(volunteerProgress)}
-              aria-valuemin={0}
-              aria-valuemax={100}
-              className="mt-3 h-1.5 overflow-hidden rounded-full bg-gray-200 dark:bg-white/10"
-            >
-              <div
-                className="h-full rounded-full bg-[#5d8338] transition-[width] duration-500 dark:bg-[#d9e9c5]"
-                style={{ width: `${volunteerProgress}%` }}
-              />
-            </div>
-          )}
-        </div>
+        {event.startTime && (
+          <p className="mt-3 inline-flex items-center gap-2 text-xs text-[#142C45]/60 dark:text-white/45">
+            <FaClock aria-hidden="true" />
+            {event.startTime}
+            {event.endTime ? ` – ${event.endTime}` : ""}
+            {event.organizer ? ` · Organized by ${event.organizer}` : ""}
+          </p>
+        )}
 
         <div className="mt-auto pt-5">
-          {event.startTime && (
-            <p className="mb-3 inline-flex items-center gap-2 text-[10px] text-[#142C45]/50 dark:text-white/40">
-              <FaClock aria-hidden="true" />
-              {event.startTime}
-              {event.endTime ? ` – ${event.endTime}` : ""}
-              {event.organizer ? ` · Organized by ${event.organizer}` : ""}
-            </p>
-          )}
           <Link
             href={`/upcomming-events/${event._id}`}
             className="group/button inline-flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-3 text-xs font-bold text-[#142C45] transition-all duration-300 hover:bg-[#142C45] hover:text-white focus-visible:ring-2 focus-visible:ring-[#142C45] focus-visible:outline-none dark:border-white/10 dark:bg-white/[0.045] dark:text-white dark:hover:border-[#d9e9c5]/30 dark:hover:bg-[#d9e9c5] dark:hover:text-[#203228] dark:focus-visible:ring-[#d9e9c5]"

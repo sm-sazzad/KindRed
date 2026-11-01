@@ -43,7 +43,9 @@ function NewsletterForm() {
     setMessage(
       "Newsletter sign-ups are not connected yet. Please check back soon.",
     );
-    toast.success("Newsletter sign-ups are not connected yet. Please check back soon.");
+    toast.success(
+      "Newsletter sign-ups are not connected yet. Please check back soon.",
+    );
   }
 
   return (

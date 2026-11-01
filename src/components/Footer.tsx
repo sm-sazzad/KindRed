@@ -2,9 +2,36 @@ import Link from "next/link";
 import {
   FaArrowRight,
   FaArrowUp,
+  FaFacebook,
+  FaGithub,
+  FaGlobe,
   FaHandHoldingHeart,
   FaHeart,
+  FaLinkedin,
 } from "react-icons/fa6";
+
+const socialLinks = [
+  {
+    name: "GitHub",
+    href: "https://github.com/sm-sazzad",
+    icon: FaGithub,
+  },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/sm-sazzad/",
+    icon: FaLinkedin,
+  },
+  {
+    name: "Facebook",
+    href: "https://www.facebook.com/sazzad.hossain.5758",
+    icon: FaFacebook,
+  },
+  {
+    name: "Portfolio",
+    href: "https://sazzad-dev.vercel.app/",
+    icon: FaGlobe,
+  },
+];
 
 const Footer = () => {
   return (
@@ -91,37 +118,31 @@ const Footer = () => {
             </ul>
           </nav>
 
-          <nav aria-label="Get involved">
+          <div>
             <h2 className="text-xs font-bold tracking-[0.16em] text-[#142C45] uppercase dark:text-white/80">
-              Get involved
+              Follow Us
             </h2>
             <ul className="mt-4 space-y-3">
-              <li>
-                <Link
-                  href="/sign-up"
-                  className="text-sm text-[#142C45]/70 transition-colors hover:text-[#5d8338] dark:text-white/50 dark:hover:text-[#d9e9c5]"
-                >
-                  Join the community
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/login"
-                  className="text-sm text-[#142C45]/70 transition-colors hover:text-[#5d8338] dark:text-white/50 dark:hover:text-[#d9e9c5]"
-                >
-                  Create an event
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/#newsletter-heading"
-                  className="text-sm text-[#142C45]/70 transition-colors hover:text-[#5d8338] dark:text-white/50 dark:hover:text-[#d9e9c5]"
-                >
-                  Get community updates
-                </Link>
-              </li>
+              {socialLinks.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <li key={item.name}>
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex items-center gap-2.5 text-sm text-[#142C45]/70 transition-colors hover:text-[#5d8338] dark:text-white/50 dark:hover:text-[#d9e9c5]"
+                    >
+                      <span className="flex h-7 w-7 items-center justify-center rounded-lg border border-gray-200 bg-white text-[#142C45] transition-transform duration-200 group-hover:scale-110 group-hover:border-[#5d8338] dark:border-white/10 dark:bg-white/[0.05] dark:text-white dark:group-hover:border-[#d9e9c5] dark:group-hover:text-[#d9e9c5]">
+                        <Icon className="text-sm" />
+                      </span>
+                      <span>{item.name}</span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
-          </nav>
+          </div>
         </div>
 
         <div className="flex flex-col gap-3 border-t border-gray-200 py-5 text-xs text-[#142C45]/60 sm:flex-row sm:items-center sm:justify-between dark:border-white/10 dark:text-white/40">
