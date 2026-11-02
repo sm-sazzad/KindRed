@@ -11,6 +11,9 @@ import {
 } from "react-icons/fa6";
 import JoinedBtn from "./JoinedBtn";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 interface Event {
   _id: string;
   title: string;
@@ -95,7 +98,7 @@ const EventDetailsPage = async ({
 
         <article className="grid overflow-hidden rounded-[1.75rem] border border-gray-200 bg-white shadow-xl lg:grid-cols-[1.15fr_0.85fr] dark:border-white/10 dark:bg-[#192736] dark:shadow-[0_30px_90px_-40px_rgba(0,0,0,0.8)]">
           {/* Event Image */}
-          <div className="relative min-h-[300px] bg-gradient-to-br from-[#d8c99e] via-[#87918e] to-[#344d62] sm:min-h-[440px] lg:min-h-[620px]">
+          <div className="relative min-h-75 bg-linear-to-br from-[#d8c99e] via-[#87918e] to-[#344d62] sm:min-h-110 lg:min-h-155">
             {event.imageUrl && (
               <Image
                 src={event.imageUrl}
@@ -108,7 +111,7 @@ const EventDetailsPage = async ({
               />
             )}
 
-            <div className="absolute inset-0 bg-gradient-to-b from-[#101a25]/25 via-transparent to-[#101a25]/65" />
+            <div className="absolute inset-0 bg-linear-to-b from-[#101a25]/25 via-transparent to-[#101a25]/65" />
 
             <span className="absolute top-5 left-5 rounded-full border border-white/20 bg-[#111b27]/50 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-md">
               {event.category}

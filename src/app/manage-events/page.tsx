@@ -76,12 +76,12 @@ export default async function ManageEventsPage() {
         {errorMessage ? (
           <p
             role="alert"
-            className="rounded-2xl border border-red-300/15 bg-red-300/[0.06] px-5 py-4 text-sm text-red-500 dark:text-red-200"
+            className="rounded-2xl border border-red-300/15 bg-red-300/6 px-5 py-4 text-sm text-red-500 dark:text-red-200"
           >
             {errorMessage}
           </p>
         ) : events.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-100 px-6 py-16 text-center dark:border-white/15 dark:bg-white/[0.025]">
+          <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-100 px-6 py-16 text-center dark:border-white/15 dark:bg-white/2.5">
             <h2 className="text-xl font-bold text-[#142C45] dark:text-white">
               You haven&apos;t created any events yet.
             </h2>
@@ -102,7 +102,7 @@ export default async function ManageEventsPage() {
                 key={event._id}
                 className="overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:border-white/10 dark:bg-[#192736] dark:shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)]"
               >
-                <div className="relative h-48 bg-gradient-to-br from-[#d9e9c5]/30 via-[#1a344b] to-[#111b27]">
+                <div className="relative h-48 bg-linear-to-br from-[#d9e9c5]/30 via-[#1a344b] to-[#111b27]">
                   {event.imageUrl && (
                     <Image
                       src={event.imageUrl}

@@ -9,7 +9,6 @@ import {
   FaCheck,
   FaClock,
   FaLocationDot,
-  FaUsers,
   FaBookmark,
 } from "react-icons/fa6";
 
@@ -72,9 +71,16 @@ export default async function JoinedEventsPage() {
     if (res.ok) {
       const data: JoinedEvent[] = await res.json();
       if (Array.isArray(data)) {
-        joinedEvents = data.filter(
-          (event) => event.email === session?.user.email,
-        );
+        joinedEvents = data
+          .filter((event) => event.email === session?.user.email)
+          .sort((a, b) => {
+            const timeA = a.eventDate ? new Date(a.eventDate).getTime() : 0;
+            const timeB = b.eventDate ? new Date(b.eventDate).getTime() : 0;
+            if (timeA !== timeB) {
+              return timeA - timeB;
+            }
+            return (a.startTime || "").localeCompare(b.startTime || "");
+          });
       }
     }
   } catch (error) {
@@ -85,10 +91,10 @@ export default async function JoinedEventsPage() {
     <main className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-12 text-[#142C45] transition-colors duration-300 sm:py-16 dark:bg-[#111b27] dark:text-[#f6f7f2]">
       <div className="mx-auto max-w-7xl">
         {/* Header Section */}
-        <div className="relative mb-10 overflow-hidden rounded-[1.75rem] border border-gray-200 bg-[#142C45] p-6 text-white shadow-xl sm:p-9 md:p-12 dark:border-white/10 dark:bg-gradient-to-br dark:from-[#1a344b] dark:via-[#172b3d] dark:to-[#172435]">
+        <div className="relative mb-10 overflow-hidden rounded-[1.75rem] border border-gray-200 bg-[#142C45] p-6 text-white shadow-xl sm:p-9 md:p-12 dark:border-white/10 dark:bg-linear-to-br dark:from-[#1a344b] dark:via-[#172b3d] dark:to-[#172435]">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-32 -right-10 h-80 w-80 rounded-full bg-[#d9e9c5]/[0.1] blur-3xl"
+            className="pointer-events-none absolute -top-32 -right-10 h-80 w-80 rounded-full bg-[#d9e9c5]/10 blur-3xl"
           />
 
           <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -118,8 +124,8 @@ export default async function JoinedEventsPage() {
 
         {/* Content Section */}
         {joinedEvents.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-100 px-6 py-20 text-center dark:border-white/15 dark:bg-white/[0.02]">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-200 text-2xl text-[#142C45]/60 dark:bg-white/[0.05] dark:text-white/40">
+          <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-100 px-6 py-20 text-center dark:border-white/15 dark:bg-white/2">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-200 text-2xl text-[#142C45]/60 dark:bg-white/5 dark:text-white/40">
               <FaBookmark />
             </div>
             <h2 className="text-2xl font-bold text-[#142C45] dark:text-white">
@@ -140,20 +146,14 @@ export default async function JoinedEventsPage() {
         ) : (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 sm:gap-8">
             {joinedEvents.map((event, index) => {
-              const joined = event.joinedVolunteers || 0;
-              const capacity = event.volunteerCapacity || 0;
-              const volunteerProgress = capacity
-                ? Math.min((joined / capacity) * 100, 100)
-                : 0;
-
               return (
                 <article
                   key={event._id || index}
-                  className="group relative flex h-full flex-col overflow-hidden rounded-[1.4rem] border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl dark:border-white/[0.09] dark:bg-[#192736] dark:hover:border-white/20 dark:shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)]"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-[1.4rem] border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gray-300 hover:shadow-xl dark:border-white/9 dark:bg-[#192736] dark:hover:border-white/20 dark:shadow-[0_20px_60px_-35px_rgba(0,0,0,0.8)]"
                 >
                   {/* Event Image / Gradient Header */}
                   <div
-                    className={`relative h-52 shrink-0 overflow-hidden bg-gradient-to-br sm:h-56 ${
+                    className={`relative h-52 shrink-0 overflow-hidden bg-linear-to-br sm:h-56 ${
                       cardGradients[index % cardGradients.length]
                     }`}
                   >
@@ -174,7 +174,7 @@ export default async function JoinedEventsPage() {
                       </div>
                     )}
 
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#101a25]/25 via-transparent to-[#101a25]/60" />
+                    <div className="absolute inset-0 bg-linear-to-b from-[#101a25]/25 via-transparent to-[#101a25]/60" />
 
                     {/* Top Badges */}
                     <div className="absolute inset-x-4 top-4 flex items-center justify-between gap-3">
@@ -216,33 +216,8 @@ export default async function JoinedEventsPage() {
                       </span>
                     </div>
 
-                    {/* Volunteer Capacity */}
-                    <div className="mt-4 border-t border-gray-200 pt-4 dark:border-white/10">
-                      <div className="flex items-center justify-between gap-3 text-xs">
-                        <span className="inline-flex items-center gap-2 text-[#142C45]/80 dark:text-white/65">
-                          <FaUsers className="text-[#5d8338] dark:text-[#d9e9c5]" />
-                          {joined.toLocaleString("en-BD")} joined
-                        </span>
-
-                        {capacity > 0 && (
-                          <span className="text-[10px] text-[#142C45]/50 dark:text-white/40">
-                            {joined} / {capacity} volunteers
-                          </span>
-                        )}
-                      </div>
-
-                      {capacity > 0 && (
-                        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-gray-200 dark:bg-white/10">
-                          <div
-                            className="h-full rounded-full bg-[#5d8338] transition-[width] duration-500 dark:bg-[#d9e9c5]"
-                            style={{ width: `${volunteerProgress}%` }}
-                          />
-                        </div>
-                      )}
-                    </div>
-
                     {/* Time & Action Button */}
-                    <div className="mt-auto pt-5">
+                    <div className="mt-auto border-t border-gray-200 pt-5 dark:border-white/10">
                       {event.startTime && (
                         <p className="mb-3 inline-flex items-center gap-2 text-[10px] text-[#142C45]/50 dark:text-white/40">
                           <FaClock />
@@ -256,7 +231,7 @@ export default async function JoinedEventsPage() {
 
                       <Link
                         href={`/upcomming-events/${event.eventId || event._id}`}
-                        className="group/button inline-flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-3 text-xs font-bold text-[#142C45] transition-all duration-300 hover:bg-[#142C45] hover:text-white focus-visible:outline-none dark:border-white/10 dark:bg-white/[0.045] dark:text-white dark:hover:border-[#d9e9c5]/30 dark:hover:bg-[#d9e9c5] dark:hover:text-[#203228]"
+                        className="group/button inline-flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-4 py-3 text-xs font-bold text-[#142C45] transition-all duration-300 hover:bg-[#142C45] hover:text-white focus-visible:outline-none dark:border-white/10 dark:bg-white/4.5 dark:text-white dark:hover:border-[#d9e9c5]/30 dark:hover:bg-[#d9e9c5] dark:hover:text-[#203228]"
                       >
                         View Details
                         <FaArrowRight className="text-[10px] transition-transform group-hover/button:translate-x-1" />

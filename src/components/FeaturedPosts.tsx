@@ -253,18 +253,8 @@ const FeaturedPosts = async () => {
     { cache: "no-store" },
   );
 
-  const allEvents: Event[] = await response.json();
-
-  const now = new Date();
-  const today = [
-    now.getFullYear(),
-    String(now.getMonth() + 1).padStart(2, "0"),
-    String(now.getDate()).padStart(2, "0"),
-  ].join("-");
-
-  const events = allEvents.filter((event) => {
-    return event.eventDate >= today;
-  });
+  const allEvents = response.ok ? await response.json() : [];
+  const events: Event[] = Array.isArray(allEvents) ? allEvents : [];
 
   const [featuredEvent, ...remainingEvents] = events;
 

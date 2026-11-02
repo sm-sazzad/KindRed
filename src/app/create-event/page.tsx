@@ -237,7 +237,7 @@ export default function CreateEventPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#142C45] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#1e3d5f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#142C45] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white dark:focus-visible:outline-[#d9e9c5]"
+            className="mt-7 cursor-pointer inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#142C45] px-5 py-3.5 text-sm font-bold text-white transition hover:bg-[#1e3d5f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#142C45] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto dark:bg-[#d9e9c5] dark:text-[#203242] dark:hover:bg-white dark:focus-visible:outline-[#d9e9c5]"
           >
             {isSubmitting ? "Creating event..." : "Create event"}
             {!isSubmitting && (

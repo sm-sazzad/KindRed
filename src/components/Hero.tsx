@@ -22,7 +22,8 @@ const Hero = () => {
             <h1 className="max-w-xl text-5xl leading-[0.98] font-extrabold tracking-[-0.055em] text-[#142C45] sm:text-6xl lg:text-[4.5rem] dark:text-white">
               Small Acts.
               <br />
-              Big Changes<span className="text-[#5d8338] dark:text-[#d9e9c5]">..</span>
+              Big Changes
+              <span className="text-[#5d8338] dark:text-[#d9e9c5]">..</span>
             </h1>
 
             <p className="mt-7 max-w-lg text-base leading-7 text-[#142C45]/70 sm:text-lg dark:text-white/60">
@@ -38,7 +39,7 @@ const Hero = () => {
                 Explore Events <FaArrowRight className="text-xs" />
               </Link>
               <Link
-                href="/login"
+                href="/create-event"
                 className="rounded-full border border-gray-300 bg-white px-6 py-3.5 text-sm font-bold text-[#142C45] transition-colors hover:bg-gray-100 dark:border-white/10 dark:bg-white/[0.04] dark:text-white dark:hover:bg-white/10"
               >
                 Create an Event

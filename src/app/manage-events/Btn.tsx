@@ -226,6 +226,7 @@ const Btn = ({ event }: { event: Event }) => {
                     <input
                       name="eventDate"
                       type="date"
+                      min={new Date().toLocaleDateString("en-CA")}
                       defaultValue={event.eventDate}
                       className={inputClass}
                     />

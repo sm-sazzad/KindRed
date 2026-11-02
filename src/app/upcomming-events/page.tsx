@@ -1,5 +1,8 @@
 import EventFilter from "@/components/events/EventFilter";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export interface Event {
   _id: string;
   title: string;
@@ -28,16 +31,17 @@ const Page = async () => {
 
   const allEvents: Event[] = await response.json();
 
-  const now = new Date();
-  const today = [
-    now.getFullYear(),
-    String(now.getMonth() + 1).padStart(2, "0"),
-    String(now.getDate()).padStart(2, "0"),
-  ].join("-");
+  // Current date in Bangladesh timezone (YYYY-MM-DD)
+  const today = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Dhaka",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(new Date());
 
-  const events = allEvents.filter((event) => {
-    return event.eventDate >= today;
-  });
+  const events = allEvents.filter(
+    (event) => event.eventDate && event.eventDate >= today,
+  );
 
   const upcomingCount = events.length;
 
@@ -45,10 +49,10 @@ const Page = async () => {
     <section className="min-h-[65vh] bg-[#F7F6F0] px-[5%] py-14 text-[#142C45] transition-colors duration-300 sm:py-20 lg:py-24 dark:bg-[#111b27] dark:text-[#f6f7f2]">
       <div className="mx-auto max-w-7xl">
         {/* Hero Section */}
-        <div className="relative mb-9 overflow-hidden rounded-[1.75rem] border border-gray-200 bg-[#142C45] p-6 text-white shadow-xl sm:mb-12 sm:p-9 md:p-12 dark:border-white/10 dark:bg-gradient-to-br dark:from-[#1a344b] dark:via-[#172b3d] dark:to-[#172435]">
+        <div className="relative mb-9 overflow-hidden rounded-[1.75rem] border border-gray-200 bg-[#142C45] p-6 text-white shadow-xl sm:mb-12 sm:p-9 md:p-12 dark:border-white/10 dark:bg-linear-to-br dark:from-[#1a344b] dark:via-[#172b3d] dark:to-[#172435]">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -top-32 -right-10 h-80 w-80 rounded-full bg-[#d9e9c5]/[0.1] blur-3xl"
+            className="pointer-events-none absolute -top-32 -right-10 h-80 w-80 rounded-full bg-[#d9e9c5]/10 blur-3xl"
           />
 
           <div className="relative flex flex-col gap-7 md:flex-row md:items-end md:justify-between">
@@ -58,7 +62,7 @@ const Page = async () => {
                 Make your time matter
               </p>
 
-              <h1 className="max-w-2xl text-4xl leading-[1.02] font-extrabold tracking-[-0.05em] text-white sm:text-5xl md:text-6xl">
+              <h1 className="max-w-2xl text-4xl leading-[1.02] font-extrabold tracking-tighter text-white sm:text-5xl md:text-6xl">
                 Good things happen
                 <br className="hidden sm:block" /> when we show up.
               </h1>
@@ -70,14 +74,14 @@ const Page = async () => {
             </div>
 
             <div className="flex shrink-0 gap-3">
-              <div className="min-w-[112px] rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
+              <div className="min-w-28 rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
                 <p className="text-2xl font-extrabold text-white">
                   {events.length.toLocaleString("en-BD")}
                 </p>
                 <p className="mt-1 text-[10px] text-white/60">All events</p>
               </div>
 
-              <div className="min-w-[112px] rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
+              <div className="min-w-28 rounded-2xl border border-white/15 bg-white/10 px-4 py-3">
                 <p className="text-2xl font-extrabold text-[#d9e9c5]">
                   {upcomingCount.toLocaleString("en-BD")}
                 </p>
@@ -89,7 +93,7 @@ const Page = async () => {
 
         {/* Events Section */}
         {events.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-100 px-6 py-16 text-center sm:py-20 dark:border-white/15 dark:bg-white/[0.025]">
+          <div className="rounded-3xl border border-dashed border-gray-300 bg-gray-100 px-6 py-16 text-center sm:py-20 dark:border-white/15 dark:bg-white/2.5">
             <p className="text-xs font-bold tracking-[0.16em] text-[#5d8338] uppercase dark:text-[#d9e9c5]">
               A good thing is on its way
             </p>

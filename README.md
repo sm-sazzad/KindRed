@@ -6,7 +6,7 @@ The platform connects volunteers with opportunities such as blood donation, envi
 
 ## 🌐 Live Demo
 
-[Visit Kindred](YOUR_LIVE_DEMO_LINK_HERE)
+[Visit Kindred](https://kindred-client.vercel.app/)
 
 ## 🛠️ Technologies Used
 
